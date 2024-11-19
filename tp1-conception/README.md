@@ -1,0 +1,1 @@
+Lien vers le flow: [figma.com](https://www.figma.com/proto/4b0qhvmF5IixW9Sfk27HJi/Maquettes-IHM2?node-id=132-7&node-type=canvas&t=4vzShcpdR919mMvu-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=132%3A7&show-proto-sidebar=1)
