@@ -1,0 +1,86 @@
+response,parentId,round,id,votes
+"Menu Liste de jeux; bouton ""Ajouter à la lub""
+Menu ""Librairie"" avec les jeux ajoutés, bouton ""enregistrer une nouvelle partie"", ""voir les statistiques"" icones
+Menu ""formulaire"" création de jeux
+,création de jeu ? vraiment ? Je pense qu'il faut ajouter des jeux custom plutot,non on créée des jeux et on les publients,bah nique ta mère,:thumbsup:",088d0dab-f9fa-4ba1-855b-ba64d5423889,3,0,4
+"Des jeux, des gens, des stats et nsm,celle à Maillard,Surtout celle-là",7a1805e4-97cb-4472-b846-ce7bed0eb5e1,1,1,2
+"Jeu{Type,Nom,Desc,etc...}
+LibEntry{Jeu,Statistique[]}
+Statistique{Temps,Gagnant}
+,cette structure de données est fauses,Ok Houdda",f3eaecb4-c4ea-45ff-a7c5-ed214f5740bb,3,2,2
+"Il faut des buttons qui font des trucs ,+1,ceci me paraît pertinent,ack,yes.,get glyphed,:cool:",3e8020f7-5283-4454-9ac2-891d4bfe6557,3,3,2
+"Il faut des buttons qui font des trucs ,+1,ceci me paraît pertinent,ack",e3ebf295-e19f-416f-b0fd-da81e6fa275b,3,4,1
+"Il faut des buttons qui font des trucs ,+1,ceci me paraît pertinent,ack,yes.,get glyphed",72eb461e-3499-4733-bb2e-45bab44082c0,3,5,1
+"mongodb
+",,1,6,0
+"Des jeux, des gens, des stats et nsm",,1,7,0
+sqlite en local,,1,8,0
+"Des jeux, des gens, des stats et nsm,celle à Maillard",c94fd7ce-b673-4796-9633-81cb1112695e,1,9,0
+"Menu Liste de jeux; bouton ""Ajouter à la lub""
+Menu ""Librairie"" avec les jeux ajoutés, bouton ""enregistrer une nouvelle partie"", ""voir les statistiques"" icones
+Menu ""formulaire"" création de jeux
+",,1,10,0
+"Des jeux, des gens, des stats et nsm,et nsm c'est le plus important",c94fd7ce-b673-4796-9633-81cb1112695e,1,11,0
+"Il faut des buttons qui font des trucs ",,1,12,0
+mongodb à distance,,1,13,0
+"Il faut des buttons qui font des trucs ,+1",949ce7e0-f28f-479e-a54d-9a88072b69de,1,14,0
+"{[
+ du json
+]
+}",,1,15,0
+"mongodb à distance,responsive*",9c1929a8-3c44-4b15-b14c-824a53349345,1,16,0
+"mongodb à distance,responsive*,data responsive",02d9570a-590d-4338-b7b3-e01dfa7f299d,1,17,0
+"{[
+ du json
+]
+},il est un peu bizarre ce json",c6d35254-8a59-4e41-a5c1-e7e1f49a8b7a,2,18,0
+"{[
+ du json
+]
+},Avec des jeux, des gens des stats et nsm",c6d35254-8a59-4e41-a5c1-e7e1f49a8b7a,2,19,0
+"Il faut des buttons qui font des trucs ,+1,ceci me paraît pertinent",d20b02b6-a362-460b-a1ca-a64e718673e7,2,20,0
+"Menu Liste de jeux; bouton ""Ajouter à la lub""
+Menu ""Librairie"" avec les jeux ajoutés, bouton ""enregistrer une nouvelle partie"", ""voir les statistiques"" icones
+Menu ""formulaire"" création de jeux
+,création de jeu ? vraiment ? Je pense qu'il faut ajouter des jeux custom plutot",85fd16eb-a327-4f92-9531-22abca8f70fc,2,21,0
+"mongodb à distance,responsive*,data responsive,il faut que le backoffice soit top",a4e21ff6-a248-4619-8e66-c76879da6b72,2,22,0
+"sqlite en local,pour stocker TOUS les jeux c'est bien",92a5b618-afaa-442e-a8e8-7465940bc789,2,23,0
+"Menu Liste de jeux; bouton ""Ajouter à la lub""
+Menu ""Librairie"" avec les jeux ajoutés, bouton ""enregistrer une nouvelle partie"", ""voir les statistiques"" icones
+Menu ""formulaire"" création de jeux
+,création de jeu ? vraiment ? Je pense qu'il faut ajouter des jeux custom plutot,J'aime bien le lub",49663321-0b5e-441b-8dfd-4654c875a2b6,2,24,0
+"mongodb à distance,responsive*,data responsive,il faut que le backoffice soit top,le frontonfire",a2fd1f09-dccc-4008-a3bd-3c26060a579a,2,25,0
+"Jeu{Type,Nom,Desc,etc...}
+LibEntry{Jeu,Statistique[]}
+Statistique{Temps,Gagnant}
+",,2,26,0
+"Menu Liste de jeux; bouton ""Ajouter à la lub""
+Menu ""Librairie"" avec les jeux ajoutés, bouton ""enregistrer une nouvelle partie"", ""voir les statistiques"" icones
+Menu ""formulaire"" création de jeux
+,ceci est la seule réponse bien",85fd16eb-a327-4f92-9531-22abca8f70fc,2,27,0
+"Jeu{Type,Nom,Desc,etc...}
+LibEntry{Jeu,Statistique[]}
+Statistique{Temps,Gagnant}
+,cette structure de données est fauses",829804ee-92aa-4edf-97e9-5e3332f8b109,2,28,0
+"Menu Liste de jeux; bouton ""Ajouter à la lub""
+Menu ""Librairie"" avec les jeux ajoutés, bouton ""enregistrer une nouvelle partie"", ""voir les statistiques"" icones
+Menu ""formulaire"" création de jeux
+,création de jeu ? vraiment ? Je pense qu'il faut ajouter des jeux custom plutot,J'aime bien le lub,yes.",4bf99c30-e844-414b-ba81-c569c0f29fb0,3,29,0
+"Il faut des buttons qui font des trucs ,+1,ceci me paraît pertinent,ack,yes.",2f905cdf-0b5e-4f45-bb59-d0f2a825a394,3,30,0
+"Il faut des buttons qui font des trucs ,+1,ceci me paraît pertinent,ack,SYN",2f905cdf-0b5e-4f45-bb59-d0f2a825a394,3,31,0
+"Menu Liste de jeux; bouton ""Ajouter à la lub""
+Menu ""Librairie"" avec les jeux ajoutés, bouton ""enregistrer une nouvelle partie"", ""voir les statistiques"" icones
+Menu ""formulaire"" création de jeux
+,création de jeu ? vraiment ? Je pense qu'il faut ajouter des jeux custom plutot,non on créée des jeux et on les publients",49663321-0b5e-441b-8dfd-4654c875a2b6,3,32,0
+"Menu Liste de jeux; bouton ""Ajouter à la lub""
+Menu ""Librairie"" avec les jeux ajoutés, bouton ""enregistrer une nouvelle partie"", ""voir les statistiques"" icones
+Menu ""formulaire"" création de jeux
+,création de jeu ? vraiment ? Je pense qu'il faut ajouter des jeux custom plutot,non on créée des jeux et on les publients,bah nique ta mère",546f7098-4ff7-4a75-bfbd-600f5531330b,3,33,0
+"{[
+ du json
+]
+},Avec des jeux, des gens des stats et nsm,et nsm",d91b693a-52a3-4307-b5dc-6487924d8d32,3,34,0
+"{[
+ du json
+]
+},Avec des jeux, des gens des stats et nsm,et nsm,et nsm",fa41c3b0-3a24-4689-8907-706e86a2e379,3,35,0
