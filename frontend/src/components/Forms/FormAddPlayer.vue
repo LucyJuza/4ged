@@ -1,0 +1,92 @@
+<template>
+  <v-container>
+    <v-row>
+      <v-col cols="12">
+        <v-text-field
+          v-model="form.name"
+          label="Nom"
+          placeholder="Nom de la personne"
+          variant="outlined"
+          density="comfortable"
+          color="secondaryContainer"
+        />
+      </v-col>
+
+      <v-col cols="12">
+        <v-file-input
+          v-model="form.image"
+          label="Image"
+          placeholder="File input"
+          variant="outlined"
+          density="comfortable"
+          accept="image/*"
+          prepend-icon="mdi-camera"
+          color="secondaryContainer"
+          @update:model-value="handleImageChange"
+        >
+          <template v-slot:prepend>
+            <div class="mr-2">
+              <v-avatar v-if="imagePreview" size="40" rounded>
+                <v-img :src="imagePreview" cover />
+              </v-avatar>
+            </div>
+          </template>
+        </v-file-input>
+      </v-col>
+    </v-row>
+  </v-container>
+</template>
+
+<script setup>
+import { ref, watch } from "vue";
+
+const props = defineProps({
+  modelValue: {
+    type: Object,
+    default: () => ({}),
+  },
+});
+
+const emit = defineEmits(["update:modelValue"]);
+
+const form = ref({
+  name: "",
+  image: null,
+});
+
+const imagePreview = ref(null);
+
+const handleImageChange = (file) => {
+  if (!file) {
+    imagePreview.value = null;
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    imagePreview.value = e.target.result;
+  };
+  reader.readAsDataURL(file);
+};
+
+watch(
+  form,
+  (newValue) => {
+    emit("update:modelValue", newValue);
+  },
+  { deep: true }
+);
+
+watch(
+  () => props.modelValue,
+  (newValue) => {
+    if (Object.keys(newValue).length) {
+      form.value = { ...newValue };
+      if (newValue.image && newValue.image instanceof File) {
+        handleImageChange(newValue.image);
+      }
+    }
+  },
+  { immediate: true }
+);
+</script>
