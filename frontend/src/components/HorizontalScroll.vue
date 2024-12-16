@@ -1,0 +1,2 @@
+<!-- In replacement of carousel -->
+

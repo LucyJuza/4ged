@@ -17,7 +17,7 @@
       </div>
 
       <div class="py-4" />
-
+      <Card text="Hello" subtext="Winner" src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"/>
       <v-row>
         <v-col cols="12">
           <v-card
