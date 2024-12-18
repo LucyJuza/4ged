@@ -22,7 +22,7 @@
         <v-col cols="12">
           <v-card
             class="py-4"
-            color="surface-variant"
+            color="onTertiaryContainer"
             image="https://cdn.vuetifyjs.com/docs/images/one/create/feature.png"
             prepend-icon="mdi-rocket-launch-outline"
             rounded="lg"
@@ -32,7 +32,7 @@
               <v-img position="top right" />
             </template>
 
-            <template #title>
+            <template #title >
               <h2 class="text-h5 font-weight-bold">Get started</h2>
             </template>
 
@@ -44,7 +44,7 @@
 
             <v-overlay
               opacity=".12"
-              scrim="primary"
+              scrim="tertiaryContainer"
               contained
               model-value
               persistent
