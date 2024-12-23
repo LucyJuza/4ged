@@ -17,7 +17,7 @@ List<string> lines = [];
 int lineCounter = 0;
 
 using ILoggerFactory factory = LoggerFactory.Create(builder => builder.AddConsole());
-ILogger logger = factory.CreateLogger("Program");
+ILogger logger = factory.CreateLogger("Doug");
 
 var jsonSerializerOptions = new JsonSerializerOptions
 {
