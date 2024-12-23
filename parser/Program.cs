@@ -28,10 +28,12 @@ try
 {
     logger.LogInformation("Reading file...");
     StreamReader sr;
+#pragma warning disable CS0162 // Unreachable code detected
     if (TestOnSmolData)
         sr = new("./input/boardgames_id_smol.txt");
     else
         sr = new("./input/boardgames_id.txt");
+#pragma warning restore CS0162 // Unreachable code detected
 
     line = sr.ReadLine()!;
     while (line != null)
