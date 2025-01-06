@@ -1,10 +1,10 @@
 <template>
-  <p>Contenu Accueil</p>
+  <p>Contenu Mes Parties</p>
 </template>
 <route lang="yaml">
 meta:
-  title: "Accueil"
+  title: "Mes Parties"
 </route>
 <script setup>
-  //
+//
 </script>

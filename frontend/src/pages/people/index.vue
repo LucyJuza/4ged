@@ -1,9 +1,9 @@
 <template>
-  <p>Contenu Accueil</p>
+  <p>Contenu Gens</p>
 </template>
 <route lang="yaml">
 meta:
-  title: "Accueil"
+  title: "Gens"
 </route>
 <script setup>
   //

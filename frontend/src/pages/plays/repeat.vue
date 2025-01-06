@@ -1,10 +1,10 @@
 <template>
-  <p>Contenu Accueil</p>
+  <p>Contenu Répéter une partie</p>
 </template>
 <route lang="yaml">
 meta:
-  title: "Accueil"
+  title: "Répéter une partie"
 </route>
 <script setup>
-  //
+//
 </script>

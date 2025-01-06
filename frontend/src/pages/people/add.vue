@@ -1,9 +1,9 @@
 <template>
-  <p>Contenu Accueil</p>
+  <p>Contenu Ajouter une personne</p>
 </template>
 <route lang="yaml">
 meta:
-  title: "Accueil"
+  title: "Ajouter une personne"
 </route>
 <script setup>
   //
