@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <h1>{{ title }}</h1>
+    <Header :title="title"/>
     <v-main>
       <router-view />
     </v-main>
@@ -8,7 +8,8 @@
 </template>
 
 <script setup>
+import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 const route = useRouter()
-const title = ref(route.currentRoute.value.meta.title ?? "No title" )
+const title = computed( () => route.currentRoute.value.meta.title ?? "No title" )
 </script>
