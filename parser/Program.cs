@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Text.Json;
 using System.Xml.Linq;
+using System.Xml;
 using Microsoft.Extensions.Logging;
 
 // Max retries for fetching a game from the API before giving up
@@ -83,7 +84,14 @@ async Task<Game?> FetchGameWithRetry(string id, int attemptCount = 0)
             return null;
         }
 
+        logger.LogDebug($"Fetched game {id} with status code {response.StatusCode}");
+        logger.LogDebug($"Response: {response}");
+
         string xmlContent = await response.Content.ReadAsStringAsync();
+
+        logger.LogDebug($"Fetched game {id} with {xmlContent}");
+        xmlContent = RemoveInvalidXmlChars(xmlContent);
+
         XDocument doc = XDocument.Parse(xmlContent);
         var boardgame = doc.Descendants("boardgame").First();
 
@@ -112,6 +120,11 @@ async Task<Game?> FetchGameWithRetry(string id, int attemptCount = 0)
         logger.LogError($"Failed to process game {id} after {MaxRetries} attempts: {ex.Message}");
         return null;
     }
+}
+
+static string RemoveInvalidXmlChars(string text) {
+  var validXmlChars = text.Where(ch => XmlConvert.IsXmlChar(ch)).ToArray();
+  return new string(validXmlChars);
 }
 
 var tasks = lines.Select(id => FetchGameWithRetry(id));
