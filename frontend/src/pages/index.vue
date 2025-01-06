@@ -1,22 +1,10 @@
 <template>
-  <BaseForm @submit="handleSubmit" @cancel="handleCancel">
-    <template #default="{ formData, 'update:form-data': updateFormData }">
-      <FormAddPlay
-        :model-value="formData"
-        @update:model-value="updateFormData"
-      />
-      <FormAddGame
-        :model-value="formData"
-        @update:model-value="updateFormData"
-      />
-      <FormAddPlayer
-        :model-value="formData"
-        @update:model-value="updateFormData"
-      />
-    </template>
-  </BaseForm>
+  <p>Contenu Accueil</p>
 </template>
-
+<route lang="yaml">
+meta:
+  title: "Accueil"
+</route>
 <script setup>
 import BaseForm from '../components/Forms/Form.vue'
 import FormAddPlay from '../components/Forms/FormAddPlay.vue'
