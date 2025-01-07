@@ -1,16 +1,16 @@
 <template>
   <v-container>
     <v-row
-      v-for="(item, index) in items"
+      v-for="(item, index) in list"
     >
       <v-col
         :key="index"
         md="6"
       >
         <v-card class="mb-4 d-flex flex-row align-center">
-          <div>
-            <v-card-title>Partie du {{ item.date }}</v-card-title>
-            <v-card-subtitle>Gagnant·e·s : {{ item.winners }}</v-card-subtitle>
+          <div class="flex-grow-1">
+            <v-card-title>{{ item.title }}</v-card-title>
+            <v-card-subtitle>{{ item.subtitle }}</v-card-subtitle>
           </div>
           <v-img
             :src="item.image"
@@ -21,25 +21,10 @@
   </v-container>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      items: [
-        {
-          date: "dd/mm/yyyy",
-          winners: "name",
-          image: "https://via.placeholder.com/400x150",
-        },
-        {
-          date: "dd/mm/yyyy",
-          winners: "name",
-          image: "https://via.placeholder.com/400x150",
-        },
-      ],
-    };
-  },
-};
+<script setup>
+defineProps({
+  list: Array
+})
 </script>
 
 <style scoped>
