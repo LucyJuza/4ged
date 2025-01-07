@@ -4,8 +4,8 @@
       <v-col cols="12">
         <v-text-field
           v-model="form.selectedGame"
-          label="Jeu joué"
-          placeholder="Nom du jeu"
+          label="Partie sélectionnée"
+          placeholder="Partie du dd/mm/yyyy"
           variant="outlined"
           density="comfortable"
           color="secondaryContainer"
