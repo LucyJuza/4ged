@@ -37,7 +37,7 @@
       <v-col cols="12">
         <v-text-field
           v-model="form.duration"
-          label="Durée"
+          label="Durée (minutes)"
           placeholder="Durée de la partie en minutes"
           variant="outlined"
           density="comfortable"
