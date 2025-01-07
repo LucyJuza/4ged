@@ -1,7 +1,7 @@
 const navigationElements = [
   {
     name: "Accueil",
-    path: "/",
+    path: "/home",
     icon: "mdi-home-outline",
     iconSelected: "mdi-home"
   },
