@@ -3,160 +3,160 @@
     "Name": "Brass: Birmingham",
     "ImageUrl": "https://cf.geekdo-images.com/x3zxjr-Vw5iU4yDPg70Jgw__original/img/FpyxH41Y6_ROoePAilPNEhXnzO8=/0x0/filters:format(jpeg)/pic3490053.jpg",
     "Genres": [
-      "Age of Reason",
-      "Economic",
-      "Industry / Manufacturing",
-      "Post-Napoleonic",
-      "Trains",
-      "Transportation"
+      {"Name": "Age of Reason"},
+      {"Name": "Economic"},
+      {"Name": "Industry / Manufacturing"},
+      {"Name": "Post-Napoleonic"},
+      {"Name": "Trains"},
+      {"Name": "Transportation"}
     ]
   },
   {
     "Name": "Pandemic Legacy: Season 1",
     "ImageUrl": "https://cf.geekdo-images.com/-Qer2BBPG7qGGDu6KcVDIw__original/img/PlzAH7swN1nsFxOXbfUvE3TkE5w=/0x0/filters:format(png)/pic2452831.png",
     "Genres": [
-      "Environmental",
-      "Medical"
+      {"Name": "Environmental"},
+      {"Name": "Medical"}
     ]
   },
   {
     "Name": "Ark Nova",
     "ImageUrl": "https://cf.geekdo-images.com/SoU8p28Sk1s8MSvoM4N8pQ__original/img/g4S18szTdrXCdIwVKzMKrZrYAcM=/0x0/filters:format(jpeg)/pic6293412.jpg",
     "Genres": [
-      "Animals",
-      "Economic",
-      "Environmental"
+      {"Name": "Animals"},
+      {"Name": "Economic"},
+      {"Name": "Environmental"}
     ]
   },
   {
     "Name": "Gloomhaven",
     "ImageUrl": "https://cf.geekdo-images.com/sZYp_3BTDGjh2unaZfZmuA__original/img/7d-lj5Gd1e8PFnD97LYFah2c45M=/0x0/filters:format(jpeg)/pic2437871.jpg",
     "Genres": [
-      "Adventure",
-      "Exploration",
-      "Fantasy",
-      "Fighting",
-      "Miniatures"
+      {"Name": "Adventure"},
+      {"Name": "Exploration"},
+      {"Name": "Fantasy"},
+      {"Name": "Fighting"},
+      {"Name": "Miniatures"}
     ]
   },
   {
     "Name": "Twilight Imperium: Fourth Edition",
     "ImageUrl": "https://cf.geekdo-images.com/_Ppn5lssO5OaildSE-FgFA__original/img/kVpZ0Maa_LeQGWxOqsYKP3N4KUY=/0x0/filters:format(jpeg)/pic3727516.jpg",
     "Genres": [
-      "Civilization",
-      "Economic",
-      "Exploration",
-      "Negotiation",
-      "Political",
-      "Science Fiction",
-      "Space Exploration",
-      "Wargame"
+      {"Name": "Civilization"},
+      {"Name": "Economic"},
+      {"Name": "Exploration"},
+      {"Name": "Negotiation"},
+      {"Name": "Political"},
+      {"Name": "Science Fiction"},
+      {"Name": "Space Exploration"},
+      {"Name": "Wargame"}
     ]
   },
   {
     "Name": "Dune: Imperium",
     "ImageUrl": "https://cf.geekdo-images.com/PhjygpWSo-0labGrPBMyyg__original/img/mZzaBAEEJpMlHWWmC0R6Su0OibQ=/0x0/filters:format(jpeg)/pic5666597.jpg",
     "Genres": [
-      "Movies / TV / Radio theme",
-      "Novel-based",
-      "Political",
-      "Science Fiction"
+      {"Name": "Movies / TV / Radio theme"},
+      {"Name": "Novel-based"},
+      {"Name": "Political"},
+      {"Name": "Science Fiction"}
     ]
   },
   {
     "Name": "Terraforming Mars",
     "ImageUrl": "https://cf.geekdo-images.com/wg9oOLcsKvDesSUdZQ4rxw__original/img/thIqWDnH9utKuoKVEUqveDixprI=/0x0/filters:format(jpeg)/pic3536616.jpg",
     "Genres": [
-      "Economic",
-      "Environmental",
-      "Industry / Manufacturing",
-      "Science Fiction",
-      "Space Exploration",
-      "Territory Building"
+      {"Name": "Economic"},
+      {"Name": "Environmental"},
+      {"Name": "Industry / Manufacturing"},
+      {"Name": "Science Fiction"},
+      {"Name": "Space Exploration"},
+      {"Name": "Territory Building"}
     ]
   },
   {
     "Name": "War of the Ring: Second Edition",
     "ImageUrl": "https://cf.geekdo-images.com/ImPgGag98W6gpV1KV812aA__original/img/38jB7fN07DwlrGKYAf-J0vsNdgs=/0x0/filters:format(jpeg)/pic1215633.jpg",
     "Genres": [
-      "Fantasy",
-      "Fighting",
-      "Novel-based",
-      "Territory Building",
-      "Wargame"
+      {"Name": "Fantasy"},
+      {"Name": "Fighting"},
+      {"Name": "Novel-based"},
+      {"Name": "Territory Building"},
+      {"Name": "Wargame"}
     ]
   },
   {
     "Name": "Star Wars: Rebellion",
     "ImageUrl": "https://cf.geekdo-images.com/7SrPNGBKg9IIsP4UQpOi8g__original/img/GKueTbkCk2Ramf6ai8mDj-BP6cI=/0x0/filters:format(jpeg)/pic4325841.jpg",
     "Genres": [
-      "Civil War",
-      "Miniatures",
-      "Movies / TV / Radio theme",
-      "Science Fiction",
-      "Space Exploration",
-      "Wargame"
+      {"Name": "Civil War"},
+      {"Name": "Miniatures"},
+      {"Name": "Movies / TV / Radio theme"},
+      {"Name": "Science Fiction"},
+      {"Name": "Space Exploration"},
+      {"Name": "Wargame"}
     ]
   },
   {
     "Name": "Spirit Island",
     "ImageUrl": "https://cf.geekdo-images.com/kjCm4ZvPjIZxS-mYgSPy1g__original/img/9uLd9C3XAvInLCLhAoXqKVk56zs=/0x0/filters:format(jpeg)/pic7013651.jpg",
     "Genres": [
-      "Environmental",
-      "Fantasy",
-      "Fighting",
-      "Mythology",
-      "Territory Building"
+      {"Name": "Environmental"},
+      {"Name": "Fantasy"},
+      {"Name": "Fighting"},
+      {"Name": "Mythology"},
+      {"Name": "Territory Building"}
     ]
   },
   {
     "Name": "Gloomhaven: Jaws of the Lion",
     "ImageUrl": "https://cf.geekdo-images.com/_HhIdavYW-hid20Iq3hhmg__original/img/PBzsLRqNKQKJxGnzpb7o3qLWPQM=/0x0/filters:format(jpeg)/pic5055631.jpg",
     "Genres": [
-      "Adventure",
-      "Exploration",
-      "Fantasy",
-      "Fighting",
-      "Miniatures"
+      {"Name": "Adventure"},
+      {"Name": "Exploration"},
+      {"Name": "Fantasy"},
+      {"Name": "Fighting"},
+      {"Name": "Miniatures"}
     ]
   },
   {
     "Name": "Gaia Project",
     "ImageUrl": "https://cf.geekdo-images.com/hGWFm3hbMlCDsfCsauOQ4g__original/img/tjlflQtUPFiTpLpwk1NCVCS29Ic=/0x0/filters:format(png)/pic5375625.png",
     "Genres": [
-      "Civilization",
-      "Economic",
-      "Miniatures",
-      "Science Fiction",
-      "Space Exploration",
-      "Territory Building"
+      {"Name": "Civilization"},
+      {"Name": "Economic"},
+      {"Name": "Miniatures"},
+      {"Name": "Science Fiction"},
+      {"Name": "Space Exploration"},
+      {"Name": "Territory Building"}
     ]
   },
   {
     "Name": "Twilight Struggle",
     "ImageUrl": "https://cf.geekdo-images.com/pNCiUUphnoeWOYfsWq0kng__original/img/Iae47UtAd_RXVd5tJ3YzbDHOv4E=/0x0/filters:format(jpeg)/pic3530661.jpg",
     "Genres": [
-      "Modern Warfare",
-      "Political",
-      "Wargame"
+      {"Name": "Modern Warfare"},
+      {"Name": "Political"},
+      {"Name": "Wargame"}
     ]
   },
   {
     "Name": "Through the Ages: A New Story of Civilization",
     "ImageUrl": "https://cf.geekdo-images.com/fVwPntkJKgaEo0rIC0RwpA__original/img/1jawNpljTXwnT4km_2CjGwoUPR8=/0x0/filters:format(jpeg)/pic2663291.jpg",
     "Genres": [
-      "Card Game",
-      "Civilization",
-      "Economic"
+      {"Name": "Card Game"},
+      {"Name": "Civilization"},
+      {"Name": "Economic"}
     ]
   },
   {
     "Name": "The Castles of Burgundy",
     "ImageUrl": "https://cf.geekdo-images.com/5CFwjd8zTcGYVUnkXh04hw__original/img/N8btACZrnEYK1amBNk26VBdcGwc=/0x0/filters:format(jpeg)/pic1176894.jpg",
     "Genres": [
-      "Dice",
-      "Medieval",
-      "Territory Building"
+      {"Name": "Dice"},
+      {"Name": "Medieval"},
+      {"Name": "Territory Building"}
     ]
   }
 ]
