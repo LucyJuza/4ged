@@ -12,16 +12,12 @@
   >
     <NavigationDrawerElementsCopy/>
   </v-navigation-drawer>
-  <v-bottom-navigation v-if="smAndDown" :elevation="0" grow class="bg-surfaceVariant" height="80">
-    <BottomNavigationElements/>
-  </v-bottom-navigation>
 </template>
 <script setup>
 import { useDisplay } from 'vuetify';
 import NavigationDrawerElementsCopy from './NavigationDrawerElements copy.vue';
-import BottomNavigationElements from './BottomNavigationElements.vue';
 
- const { smAndDown, mdAndUp } = useDisplay()
+const { mdAndUp } = useDisplay()
 defineProps({
   title:String
 })
