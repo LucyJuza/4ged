@@ -50,3 +50,36 @@ const submitForm = () => {
   emit('submit', formData.value)
 }
 </script>
+
+<style>
+@layer utilities {
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type="number"] {
+    appearance: textfield;
+    -moz-appearance: textfield;
+  }
+}
+
+.v-label.v-field-label--floating {
+  background-color: rgb(var(--v-theme-secondaryContainer)) !important;
+  border-radius: 4px !important;
+  padding: 0 4px !important;
+}
+
+.v-input__prepend {
+  display: none !important;
+}
+
+.v-field__outline {
+  color: rgb(var(--v-theme-secondary)) !important;
+}
+
+.mdi-checkbox-marked {
+  color: rgb(var(--v-theme-primary)) !important;
+}
+</style>

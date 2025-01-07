@@ -8,7 +8,6 @@
           placeholder="Mon super jeu custom"
           variant="outlined"
           density="comfortable"
-          color="secondaryContainer"
         />
       </v-col>
 
@@ -18,10 +17,7 @@
           label="Image"
           placeholder="File input"
           variant="outlined"
-          density="comfortable"
           accept="image/*"
-          prepend-icon="mdi-camera"
-          color="secondaryContainer"
           @update:model-value="handleImageChange"
         >
           <template v-slot:prepend>
@@ -35,27 +31,24 @@
       </v-col>
 
       <v-col cols="12">
-        <div class="mb-2">
-          <label class="secondaryContainer">Genres</label>
-        </div>
-        <v-combobox
+        <v-select
           v-model="form.genres"
+          :items="items"
+          label="Genres"
           chips
           multiple
-          closable-chips
           placeholder="Ajouter des genres"
           variant="outlined"
-          density="comfortable"
-          color="secondaryContainer"
         >
           <template v-slot:chip="{ props, item }">
-            <v-chip
-              v-bind="props"
-            >
-              {{ item.raw }}
-            </v-chip>
-          </template>
-        </v-combobox>
+              <v-chip
+                v-bind="props"
+                class="bg-secondaryContainer"
+              >
+                {{ item.raw }}
+              </v-chip>
+            </template>
+        </v-select>
       </v-col>
     </v-row>
   </v-container>
@@ -108,4 +101,13 @@ watch(() => props.modelValue, (newValue) => {
     }
   }
 }, { immediate: true })
+</script>
+
+
+<script>
+  export default {
+    data: () => ({
+      items: ['foo', 'bar', 'fizz', 'buzz'],
+    }),
+  }
 </script>
