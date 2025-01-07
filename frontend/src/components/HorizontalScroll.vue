@@ -1,8 +1,8 @@
 <!-- In replacement of carousel -->
 <template>
-  <div style="width: 300px;" class="overflow-x-auto">
-
-  </div>
+  <v-container width="300" max-width="300" class="overflow-x-auto d-flex flex-row ga-5">
+    <slot></slot>
+  </v-container>
 </template>
 
 <script>

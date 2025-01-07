@@ -1,6 +1,7 @@
 <template>
   <v-card
     class="mx-auto"
+    min-width="200"
     max-width="400"
   >
     <v-img
