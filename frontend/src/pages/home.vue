@@ -1,7 +1,7 @@
 <template>
   <div class="pa-0 ma-0 w-100 h-100 overflow-auto d-flex flex-column">
     <div style="height: 100px;" class="flex-shrink-0">
-      <div class="d-flex flex-row align-center ga-1 flex-grow-0">
+      <div class="d-flex flex-row align-center ga-3 flex-grow-0">
         <div :height="75" :width="75">
           <v-img rounded="circle" 
           :height="75"

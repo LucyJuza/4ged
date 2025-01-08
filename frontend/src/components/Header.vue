@@ -15,7 +15,7 @@
 </template>
 <script setup>
 import { useDisplay } from 'vuetify';
-import NavigationDrawerElementsCopy from './NavigationDrawerElements copy.vue';
+import NavigationDrawerElementsCopy from './NavigationDrawerElements.vue';
 
 const { mdAndUp } = useDisplay()
 defineProps({

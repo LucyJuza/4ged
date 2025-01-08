@@ -23,5 +23,4 @@
 import { useRouter } from 'vue-router';
 import { navigationElements } from './navigation';
 const route = useRouter()
-console.log(route.currentRoute.value.path)
 </script>

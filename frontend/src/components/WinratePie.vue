@@ -14,10 +14,9 @@ import { Pie } from 'vue-chartjs'
 import { useDisplay } from 'vuetify';
 const id = ref(0)
 const {height,width} = useDisplay()
+// refresh chart on page resize because lib doesn't work properly by default
 watch([height,width], () =>{
-  console.log("height changed")
   id.value++
-  console.log(id.value)
 })
 ChartJS.register(ArcElement, Tooltip, Legend)
 const options = {
