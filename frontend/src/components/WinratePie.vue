@@ -8,16 +8,18 @@
   </div>
 </template>
 <script setup>
+import { useAppStore } from '@/stores/app';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
 import { ref, watch } from 'vue';
 import { Pie } from 'vue-chartjs'
 import { useDisplay } from 'vuetify';
+const appStore = useAppStore()
+const stats = appStore.getStatistics()
 const id = ref(0)
 const {height,width} = useDisplay()
+// refresh chart on page resize because lib doesn't work properly by default
 watch([height,width], () =>{
-  console.log("height changed")
   id.value++
-  console.log(id.value)
 })
 ChartJS.register(ArcElement, Tooltip, Legend)
 const options = {
@@ -31,11 +33,10 @@ const data = ref({
   ],
   datasets: [{
     label: 'nombre de parties',
-    data: [80,20],
+    data: [stats.personalWinrate.won, stats.personalWinrate.lost],
     backgroundColor: [
       '#B76F91',
       '#9B26DE',
-      'rgb(255, 205, 86)'
     ],
     hoverOffset: 4
   }]

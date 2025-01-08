@@ -1,7 +1,7 @@
 <template>
   <div class="pa-0 ma-0 w-100 h-100 overflow-auto d-flex flex-column">
     <div style="height: 100px;" class="flex-shrink-0">
-      <div class="d-flex flex-row align-center ga-1 flex-grow-0">
+      <div class="d-flex flex-row align-center ga-3 flex-grow-0">
         <div :height="75" :width="75">
           <v-img rounded="circle" 
           :height="75"
@@ -14,14 +14,14 @@
       </div>
     </div>
     <div class="flex-grow-1 flex-shrink-0 overflow-auto" style="flex-basis: 0;">
-      <div class="h-100">
-        <v-container fluid class="h-100 pa-0 d-flex flex-column flex-md-wrap-reverse ga-4 overflow-auto">
-          <ContentCard title="Statistiques" class="flex-xs-grow-1">
+      <div class="h-100 w-100">
+        <v-container fluid class="w-100 h-100 pa-0 d-flex flex-column flex-md-wrap-reverse ga-4 overflow-auto">
+          <HalfContentCard title="Statistiques" >
             <div class="h-100">
               <WinratePie/>
             </div>
-          </ContentCard>
-          <ContentCard title="Dernières parties">
+          </HalfContentCard>
+          <HalfContentCard title="Dernières parties">
             <div v-if="smAndDown" class="h-100 d-flex align-center">
               <HorizontalScroll>
                 <div style="width:200px; height: 100px;" v-for="play in last4Plays">
@@ -40,7 +40,7 @@
                   :subtext="play.winners.includes(appStore.userData.personId) ? 'Gagnée' : 'Perdue'"/>
               </div>
             </div>
-          </ContentCard>
+          </HalfContentCard>
         </v-container>
       </div>
     </div>
@@ -114,7 +114,7 @@ meta:
   title: "Accueil"
 </route>
 <script setup>
-import ContentCard from '@/components/ContentCard.vue'
+import HalfContentCard from '@/components/HalfContentCard.vue';
 import ImageCard from '@/components/ImageCard.vue';
 import WinratePie from '@/components/WinratePie.vue';
 import { useAppStore } from '@/stores/app';

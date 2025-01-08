@@ -7,6 +7,7 @@
       class="align-end w-100 h-100"
       cover
       gradient="to bottom left, rgba(255,255,255,.33), rgba(0,0,0,.7)"
+      lazy-src=""
       :src=props.src
     >
         <v-card-title class="text-white">{{ props.text }}</v-card-title>
