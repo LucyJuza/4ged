@@ -58,6 +58,16 @@ func AddGames(c *fiber.Ctx) error {
 	return c.JSON(res)
 }
 
+func SearchGames(c *fiber.Ctx) error {
+	var games *[]entities.Game
+
+	filter := c.Params("filter", "")
+
+	config.DB.Where("name like %?%", filter).Find(&games)
+
+	return c.JSON(games)
+}
+
 func addGame(game *entities.Game) (*entities.Game, error) {
 	res := config.DB.Create(&game)
 
