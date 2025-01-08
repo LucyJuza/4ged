@@ -11,7 +11,7 @@ const int DelayBetweenRetries = 1000;
 // Max degree of parallelism for fetching games (higer is better)
 const int MaxDegreeOfParallelism = 5;
 // Test on a smaller dataset to avoid hitting the API too hard (like 15 games instead of 160916)
-const bool TestOnSmolData = true;
+const bool TestOnSmolData = false;
 
 string line;
 List<string> lines = [];
