@@ -2,6 +2,8 @@ package handlers
 
 import (
 	"errors"
+	"log"
+	"strconv"
 
 	"backend/config"
 	"backend/entities"
@@ -10,19 +12,28 @@ import (
 	"gorm.io/gorm"
 )
 
+const pageSize = 100
+
 func GetGames(c *fiber.Ctx) error {
 	id := c.Params("id")
 
+	pageIndex, err := getPageIndex(c)
+	if err != nil {
+		return c.Status(fiber.ErrBadRequest.Code).SendString(err.Error())
+	}
+
 	var games []entities.Game
-	var result *gorm.DB
 
 	if id != "" {
-		result = config.DB.Find(&games, id)
-		if result.RowsAffected == 0 {
+		err := getGames().Find(&games, id).Error
+		if err != nil {
 			return c.SendStatus(404)
 		}
 	} else {
-		config.DB.Find(&games)
+		err := paginate(getGames().Find(&games), pageIndex).Error
+		if err != nil {
+			return c.Status(500).SendString(err.Error())
+		}
 	}
 
 	return c.Status(200).JSON(games)
@@ -59,11 +70,18 @@ func AddGames(c *fiber.Ctx) error {
 }
 
 func SearchGames(c *fiber.Ctx) error {
-	var games *[]entities.Game
+	var games []entities.Game
 
-	filter := c.Params("filter", "")
+	filter := c.Query("filter", "")
 
-	config.DB.Where("name like %?%", filter).Find(&games)
+	pageIndex, err := getPageIndex(c)
+	if err != nil {
+		return c.Status(fiber.ErrBadRequest.Code).SendString(err.Error())
+	}
+
+	log.Println(filter)
+
+	paginate(getGames().Where("name LIKE ?", "%"+filter+"%").Find(&games), pageIndex)
 
 	return c.JSON(games)
 }
@@ -98,4 +116,21 @@ func addGames(games *[]entities.Game) ([]entities.Game, error) {
 	}
 
 	return *games, nil
+}
+
+func getGames() *gorm.DB {
+	return config.DB.Model(&entities.Game{}).Preload("Genres")
+}
+
+func paginate(req *gorm.DB, pageIndex int) *gorm.DB {
+	return req.Limit(pageSize).Offset(pageSize * pageIndex)
+}
+
+func getPageIndex(c *fiber.Ctx) (int, error) {
+	pageIndex, err := strconv.Atoi(c.Query("pageIndex", "0"))
+	if err != nil {
+		return 0, errors.New("pageIndex should be a positive integer")
+	}
+
+	return pageIndex, nil
 }

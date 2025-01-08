@@ -8,8 +8,8 @@ import (
 
 func Init(app *fiber.App) {
 	// Games routes
-	app.Get("/games/:id?", handlers.GetGames)
-	app.Get("/games/search/:filter", handlers.SearchGames)
+	app.Get("/games/:id<int>?", handlers.GetGames)
+	app.Get("/games/search", handlers.SearchGames)
 	// Search games
 	app.Post("/games", handlers.AddGame)
 	app.Post("/batch/games", handlers.AddGames)
