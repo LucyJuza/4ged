@@ -36,7 +36,7 @@ read -p "Quelle est l'URL du serveur ? (´｡• ω •｡\`) " url
 # Send files
 for i in $(seq 0 $((miam/lines))); do
     echo "*envoie le fichier $i avec amour* ♡(◡‿◡✿)"
-    curl -X POST -H "Content-Type: application/json" -d @output/games_$i.json $url
+    curl -X POST -H "Content-Type: application/json" -o /dev/null -d @output/games_$i.json $url
 done
 
 # Delete files
