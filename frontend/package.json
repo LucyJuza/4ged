@@ -12,6 +12,7 @@
     "chartjs": "^0.3.24",
     "core-js": "^3.37.1",
     "roboto-fontface": "*",
+    "uuid": "^11.0.4",
     "vue": "^3.4.31",
     "vue-chartjs": "^5.3.2",
     "vuetify": "^3.6.11"

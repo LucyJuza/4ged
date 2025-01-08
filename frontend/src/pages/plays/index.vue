@@ -2,6 +2,7 @@
   <FullContentCard>
     <div class="d-flex flex-column">
       <PlaysList :images-enabled="true"
+      style="max-width: 500px;"
       :list="appStore.userData.plays"
       />
     </div>

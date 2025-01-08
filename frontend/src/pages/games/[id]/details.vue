@@ -22,7 +22,7 @@
       </div>
       <span class="text-h6 mt-3">Historique</span>
       <div class="w-100 overflow-auto flex-shrink-0" max-height="300">
-        <PlaysList :list="history">
+        <PlaysList style="max-width: 500px;" :list="history">
         </PlaysList>
       </div>
       <v-btn

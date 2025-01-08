@@ -26,8 +26,8 @@
           <span class="font-weight-bold">Joueur·euse·s: </span>
           <span>{{ stats.persons }}</span>
         </div>
+        <v-divider class="border-opacity-100"></v-divider>
       </div>
-      <hr />
       <div style="max-width: 300px;">
         <WinratePie/>
       </div>

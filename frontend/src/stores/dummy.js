@@ -1,4 +1,5 @@
 // Utilities
+import { v4 as uuidv4 } from 'uuid';
 import { defineStore } from 'pinia'
 import dummyUserDatas from '../../dummy-user-datas.json'
 import dummyGenres from '../../dummy-genres.json'
@@ -16,13 +17,15 @@ export const useDummyStore = defineStore('app', {
     },
     genres: dummyGenres,
     games: dummyGames,
+    filteredUserGames: dummyUserDatas.games,
+    filteredGames: dummyGames,
     selectedGameIdForPlayCreation: undefined,
     selectedPlayIdForRepetition: undefined
   }),
   actions: {
     filterGames(searchFilter){
-      this.userData.games = dummyUserDatas.games.filter(g => g.name.toLowerCase().includes(searchFilter))
-      this.games = dummyGames.filter(g => g.name.toLowerCase().includes(searchFilter))
+      this.filteredUserGames = [...this.userData.games].filter(g => g.name.toLowerCase().includes(searchFilter))
+      this.filteredGames = [...this.games].filter(g => g.name.toLowerCase().includes(searchFilter))
     },
     getGameById(id){
       return this.games.find(g => g.id == id)
@@ -71,6 +74,30 @@ export const useDummyStore = defineStore('app', {
         highestWinrate: highestWinrate,
         personalWinrate: personalWinrate
       }
+    },
+    addGame(values){
+      const id =  uuidv4()
+      this.userData.games.push({
+        id: id,
+        name: values.name,
+        genres: values.genres,
+        image: values.image
+      })
+      this.games.push({
+        id: id,
+        name: values.name,
+        genres: values.genres,
+        image: values.image
+      })
+    },
+    addPerson(values){
+      const id =  uuidv4()
+      this.userData.persons.push({
+        id: id,
+        name: values.name,
+        image: values.image,
+        winrate: 0
+      })
     }
   }
 })
