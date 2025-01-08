@@ -100,7 +100,7 @@ async Task<Game?> FetchGameWithRetry(string id, int attemptCount = 0)
       Name = boardgame.Elements("name")
         .First(n => (string?)n.Attribute("primary") == "true")
         .Value,
-      ImageUrl = boardgame.Element("image")?.Value ?? string.Empty,
+      Image = boardgame.Element("image")?.Value ?? string.Empty,
       Genres = boardgame.Elements("boardgamecategory")
         .Select(g => g.Value)
         .Select(g => new Genre { Name = g })
