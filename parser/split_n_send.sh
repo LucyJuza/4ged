@@ -21,4 +21,25 @@ for i in $(seq 0 $((miam/lines))); do
     cat $file | jq -c '.['$((i*lines))':'$((i*lines+lines))']' > output/games_$i.json
 done
 
+read -p "On envoie tout ça sur le serveur ? [yn] (´｡• ω •｡\`) " yn
+
+if [ "$yn" != "${yn#[Yy]}" ] ;then 
+    echo "Yaaaaay! (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧"
+else
+    echo "Owww... *"
+    exit
+fi
+
+# Get URL
+read -p "Quelle est l'URL du serveur ? (´｡• ω •｡\`) " url
+
+# Send files
+for i in $(seq 0 $((miam/lines))); do
+    echo "*envoie le fichier $i avec amour* ♡(◡‿◡✿)"
+    curl -X POST -H "Content-Type: application/json" -d @output/games_$i.json $url
+done
+
+# Delete files
+rm output/games_*.json
+
 echo "Terminé desu~ UwU! *fait un petit câlin à ton terminal* (ﾉ´ヮ\`)ﾉ*: ･ﾟ"
