@@ -2,18 +2,29 @@
   <v-container>
     <v-row>
       <v-col cols="12">
-        <v-text-field
+        <v-autocomplete
           v-model="form.selectedGame"
+          :items="formatedGames"
           label="Jeu joué"
-          placeholder="Nom du jeu"
+          placeholder="Sélectionner le jeu joué"
           variant="outlined"
-          density="comfortable"
-          color="secondaryContainer"
-        />
+          item-title="title"
+          item-value="value"
+        >
+          <template v-slot="{ props, item }">
+                  <v-chip
+              v-bind="props"
+              class="bg-secondaryContainer"
+                  >
+              {{ item.title }}
+                  </v-chip>
+          </template>
+        </v-autocomplete>
       </v-col>
 
       <v-col cols="12">
         <v-text-field
+        type="date"
           v-model="form.date"
           label="Date de la partie"
           placeholder="dd/mm/yyyy"
@@ -72,7 +83,7 @@
       <v-col cols="12">
         <v-autocomplete
           v-model="form.winners"
-          :items="formattedPlayers"
+          :items="winnablePlayers"
           label="Gagnant·e·s"
           chips
           multiple
@@ -86,7 +97,7 @@
               v-bind="props"
               class="bg-secondaryContainer"
                   >
-              {{ item.raw.title }}
+              {{ item.title }}
                   </v-chip>
           </template>
         </v-autocomplete>
@@ -96,8 +107,11 @@
 </template>
 
 <script setup>
+import { useAppStore } from "@/stores/app";
+import { storeToRefs } from "pinia";
 import { ref, computed, watch } from "vue";
-
+const appStore = useAppStore()
+const reactiveAppStore = storeToRefs(appStore)
 const props = defineProps({
   modelValue: {
     type: Object,
@@ -107,18 +121,22 @@ const props = defineProps({
 
 const emit = defineEmits(["update:modelValue"]);
 
-const availablePlayers = ref([
-  { id: 1, name: "Joueur 1" },
-  { id: 2, name: "Joueur 2" },
-]);
+const availablePlayers = reactiveAppStore.userData.value.persons
+const availableGames = reactiveAppStore.games.value
 
 const formattedPlayers = computed(() => {
-  return availablePlayers.value.map(player => ({
+  return availablePlayers.map(player => ({
     title: player.name,
     value: player.id
   }));
 });
 
+const formatedGames = computed(() => {
+  return availableGames?.map(game => ({
+    title: game.name,
+    value: game.id
+  }));
+});
 const form = ref({
   selectedGame: "",
   date: "",
@@ -128,12 +146,16 @@ const form = ref({
   winners: [],
 });
 
+const winnablePlayers = computed( () => {
+  return [...formattedPlayers.value]?.filter(p => form.value.players?.includes(p.value))
+}) 
+
 const isValid = computed(() => {
   return form.value.selectedGame &&
          form.value.date &&
          form.value.location &&
          form.value.duration &&
-         form.value.players.length > 0;
+         form.value.players?.length > 0;
 });
 
 watch(

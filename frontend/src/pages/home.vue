@@ -111,10 +111,10 @@
     
   </div>
 </template>
-<router lang="yaml">
+<route lang="yaml">
 meta:
   title: "Accueil"
-</router>
+</route>
 <script setup>
 import HalfContentCard from '@/components/HalfContentCard.vue';
 import ImageCard from '@/components/ImageCard.vue';

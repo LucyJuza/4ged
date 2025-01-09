@@ -24,6 +24,7 @@ export const useDummyStore = defineStore('app', {
   }),
   actions: {
     filterGames(searchFilter){
+      searchFilter = searchFilter.toLowerCase()
       this.filteredUserGames = [...this.userData.games].filter(g => g.name.toLowerCase().includes(searchFilter))
       this.filteredGames = [...this.games].filter(g => g.name.toLowerCase().includes(searchFilter))
     },
@@ -97,6 +98,18 @@ export const useDummyStore = defineStore('app', {
         name: values.name,
         image: values.image,
         winrate: 0
+      })
+    },
+    addPlay(values){
+      const id =  uuidv4()
+      this.userData.plays.push({
+        id: id,
+        gameId: values.gameId,
+        date: values.date,
+        location: values.location,
+        duration: values.duration,
+        participants: values.participants,
+        winners: values.winners
       })
     }
   }
