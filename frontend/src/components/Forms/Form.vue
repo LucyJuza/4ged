@@ -1,38 +1,37 @@
 <template>
-  <v-container>
-    <v-form @submit.prevent="submitForm">
+  <v-form @submit.prevent="submitForm" class="pa-0 w-100 h-100">
+    <div>
       <slot
-        :form-data="formData"
-        @update:form-data="updateFormData"
+      :form-data="formData"
+      @update:form-data="updateFormData"
       ></slot>
+    </div>
 
-      <v-row class="mt-4">
-        <v-col cols="6">
-          <v-btn
-            block
-            color="inversePrimary"
-            variant="flat"
-            @click="$emit('cancel')"
-          >
-            <v-icon icon="mdi-close"></v-icon>
-            Annuler
-          </v-btn>
-        </v-col>
-
-        <v-col cols="6">
-          <v-btn 
-            block 
-            color="primary" 
-            type="submit" 
-            variant="flat"
-          >
-            <v-icon icon="mdi-plus"></v-icon>
-            Ajouter
-          </v-btn>
-        </v-col>
-      </v-row>
-    </v-form>
-  </v-container>
+    <div class="d-flex flex-row w-100 ga-2">
+      <div class="flex-grow-1">
+        <v-btn
+          class="w-100 pa-0"
+          color="inversePrimary"
+          variant="flat"
+          @click="$emit('cancel')"
+        >
+          <v-icon icon="mdi-close"></v-icon>
+          Annuler
+        </v-btn>
+      </div>
+      <div class="flex-grow-1">
+        <v-btn 
+          class="w-100 pa-0"
+          color="primary" 
+          type="submit" 
+          variant="flat"
+        >
+          <v-icon icon="mdi-plus"></v-icon>
+          Ajouter
+        </v-btn>
+      </div>
+    </div>
+  </v-form>
 </template>
 
 <script setup>
@@ -52,18 +51,6 @@ const submitForm = () => {
 </script>
 
 <style>
-@layer utilities {
-  input[type="number"]::-webkit-inner-spin-button,
-  input[type="number"]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-
-  input[type="number"] {
-    appearance: textfield;
-    -moz-appearance: textfield;
-  }
-}
 
 .v-label.v-field-label--floating {
   background-color: rgb(var(--v-theme-secondaryContainer)) !important;

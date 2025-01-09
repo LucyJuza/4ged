@@ -99,6 +99,18 @@ export const useDummyStore = defineStore('app', {
         image: values.image,
         winrate: 0
       })
+    },
+    addPlay(values){
+      const id =  uuidv4()
+      this.userData.plays.push({
+        id: id,
+        gameId: values.gameId,
+        date: values.date,
+        location: values.location,
+        duration: values.duration,
+        participants: values.participants,
+        winners: values.winners
+      })
     }
   }
 })
