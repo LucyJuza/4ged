@@ -47,107 +47,49 @@
       </v-col>
 
       <v-col cols="12">
-        <v-text-field
+        <v-autocomplete
+          v-model="form.players"
+          :items="formattedPlayers"
           label="Participant·e·s"
-          readonly
+          chips
+          multiple
+          placeholder="Ajouter des participant·e·s"
           variant="outlined"
-          density="comfortable"
-          color="secondaryContainer"
-          :model-value="null"
+          item-title="title"
+          item-value="value"
         >
-          <template v-slot:append>
-            <v-menu>
-              <template v-slot:activator="{ props }">
-                <v-btn
-                  icon
-                  variant="text"
+          <template v-slot:chip="{ props, item }">
+            <v-chip
                   v-bind="props"
-                  color="secondaryContainer"
+              class="bg-secondaryContainer"
                 >
-                  <v-icon>mdi-plus</v-icon>
-                </v-btn>
-              </template>
-
-              <v-list>
-                <v-list-item
-                  v-for="player in availablePlayers"
-                  :key="player.id"
-                  :value="player"
-                  @click="togglePlayer(player)"
-                >
-                  <v-list-item-title>{{ player.name }}</v-list-item-title>
-                </v-list-item>
-              </v-list>
-            </v-menu>
-          </template>
-
-          <template v-slot:default>
-            <v-slide-group
-              v-model="form.players"
-              multiple
-              show-arrows
-              class="mt-1"
-            >
-              <v-slide-group-item
-                v-for="player in form.players"
-                :key="player.id"
-                v-slot="{ isSelected, toggle }"
-              >
-                <v-scale-transition>
-                  <v-chip
-                    label
-                    color="secondaryContainer"
-                    variant="elevated"
-                    class="text-body-2 mx-1"
-                    closable
-                    @click="toggle"
-                    @click:close="removePlayer(player)"
-                  >
-                    {{ player.name }}
+              {{ item.raw.title }}
                   </v-chip>
-                </v-scale-transition>
-              </v-slide-group-item>
-            </v-slide-group>
           </template>
-        </v-text-field>
+        </v-autocomplete>
       </v-col>
 
       <v-col cols="12">
-        <v-text-field
+        <v-autocomplete
+          v-model="form.winners"
+          :items="formattedPlayers"
           label="Gagnant·e·s"
-          readonly
+          chips
+          multiple
+          placeholder="Sélectionner les gagnant·e·s"
           variant="outlined"
-          density="comfortable"
-          color="secondaryContainer"
-          :model-value="null"
+          item-title="title"
+          item-value="value"
         >
-          <template v-slot:default>
-            <v-slide-group
-              v-model="form.winners"
-              multiple
-              show-arrows
-              class="mt-1"
-            >
-              <v-slide-group-item
-                v-for="player in form.players"
-                :key="player.id"
-                v-slot="{ isSelected, toggle }"
-              >
-                <v-scale-transition>
+          <template v-slot:chip="{ props, item }">
                   <v-chip
-                    label
-                    color="secondaryContainer"
-                    variant="elevated"
-                    class="text-body-2 mx-1"
-                    @click="toggleWinner(player)"
+              v-bind="props"
+              class="bg-secondaryContainer"
                   >
-                    {{ player.name }}
+              {{ item.raw.title }}
                   </v-chip>
-                </v-scale-transition>
-              </v-slide-group-item>
-            </v-slide-group>
           </template>
-        </v-text-field>
+        </v-autocomplete>
       </v-col>
     </v-row>
   </v-container>
@@ -165,6 +107,18 @@ const props = defineProps({
 
 const emit = defineEmits(["update:modelValue"]);
 
+const availablePlayers = ref([
+  { id: 1, name: "Joueur 1" },
+  { id: 2, name: "Joueur 2" },
+]);
+
+const formattedPlayers = computed(() => {
+  return availablePlayers.value.map(player => ({
+    title: player.name,
+    value: player.id
+  }));
+});
+
 const form = ref({
   selectedGame: "",
   date: "",
@@ -172,6 +126,14 @@ const form = ref({
   duration: "",
   players: [],
   winners: [],
+});
+
+const isValid = computed(() => {
+  return form.value.selectedGame &&
+         form.value.date &&
+         form.value.location &&
+         form.value.duration &&
+         form.value.players.length > 0;
 });
 
 watch(
