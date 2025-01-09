@@ -18,6 +18,9 @@
         <div>
           <span>Participant·e·s: </span> <span>{{ play.participants.reduce((acc,curr) => acc + ", " + appStore.getPersonById(curr).name,"").substring(2) }}</span>
         </div>
+        <div>
+          <span>Gagnant·e·s: </span> <span>{{ play.winners.reduce((acc,curr) => acc + ", " + appStore.getPersonById(curr).name,"").substring(2) }}</span>
+        </div>
       </div>
       <v-btn
         color="primary"

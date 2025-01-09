@@ -38,7 +38,7 @@
 <script setup>
 import { ref } from 'vue'
 
-defineEmits(['submit', 'cancel'])
+const emit = defineEmits(['submit', 'cancel'])
 
 const formData = ref({})
 

@@ -26,6 +26,7 @@
               <HorizontalScroll>
                 <div style="width:200px; height: 100px;" v-for="play in last4Plays">
                   <ImageCard
+                  @click="() => router.push(`/plays/${play.id}/details`)"
                   :src="appStore.userData.games.find(g => g.id === play.gameId).image"
                   :text="appStore.userData.games.find(g => g.id === play.gameId).name"
                   :subtext="play.winners.includes(appStore.userData.personId) ? 'Gagnée' : 'Perdue'"/>
@@ -35,6 +36,7 @@
             <div v-else class="h-100 d-flex flex-row flex-wrap align-center justify-space-around ga-9">
               <div style="width:280px; height: 200px;" v-for="play in last4Plays">
                 <ImageCard 
+                  @click="() => router.push(`/plays/${play.id}/details`)"
                   :src="appStore.userData.games.find(g => g.id === play.gameId).image"
                   :text="appStore.userData.games.find(g => g.id === play.gameId).name"
                   :subtext="play.winners.includes(appStore.userData.personId) ? 'Gagnée' : 'Perdue'"/>
@@ -54,7 +56,7 @@
           color="inversePrimary"
           height="56"
           elevation="8"
-          @click="() => {route.push('/plays/add')}"
+          @click="() => {router.push('/plays/add')}"
           >
             <v-icon size="32">
               mdi-gamepad-outline
@@ -68,7 +70,7 @@
           color="inversePrimary"
           height="56"
           elevation="8"
-          @click="() => {route.push('/plays/replay')}"
+          @click="() => {router.push('/plays/repeat')}"
           >
             <v-icon size="32">
               mdi-repeat
@@ -109,10 +111,10 @@
     
   </div>
 </template>
-<route lang="yaml">
+<router lang="yaml">
 meta:
   title: "Accueil"
-</route>
+</router>
 <script setup>
 import HalfContentCard from '@/components/HalfContentCard.vue';
 import ImageCard from '@/components/ImageCard.vue';
@@ -122,8 +124,8 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useDisplay } from 'vuetify';
 const { smAndDown } = useDisplay()
-const route = useRouter()
+const router = useRouter()
 const appStore = useAppStore()
-const last4Plays = appStore.userData.plays.sort((a,b) => a.date - b.date).slice(0,4)
+const last4Plays = appStore.userData.plays.sort((a,b) => (new Date(b.date)) - (new Date(a.date)) ).slice(0,4)
 const fabGroupOpenned = ref(false)
 </script>

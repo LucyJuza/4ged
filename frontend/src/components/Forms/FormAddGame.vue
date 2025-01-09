@@ -12,26 +12,17 @@
       </v-col>
 
       <v-col cols="12">
-        <v-file-input
+        <v-text-field
           v-model="form.image"
           label="Image"
-          placeholder="File input"
+          placeholder="Lien vers l'image du jeu"
           variant="outlined"
-          accept="image/*"
-          @update:model-value="handleImageChange"
-        >
-          <template v-slot:prepend>
-            <div class="mr-2">
-              <v-avatar v-if="imagePreview" size="40" rounded>
-                <v-img :src="imagePreview" cover />
-              </v-avatar>
-            </div>
-          </template>
-        </v-file-input>
+          density="comfortable"
+        />
       </v-col>
 
       <v-col cols="12">
-        <v-select
+        <v-autocomplete
           v-model="form.genres"
           :items="items"
           label="Genres"
@@ -48,15 +39,17 @@
                 {{ item.raw }}
               </v-chip>
             </template>
-        </v-select>
+        </v-autocomplete>
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script setup>
+import { useAppStore } from '@/stores/app'
 import { ref, watch } from 'vue'
-
+const appStore = useAppStore()
+const items = appStore.genres.map(g => g.name)
 const props = defineProps({
   modelValue: {
     type: Object,
@@ -101,13 +94,4 @@ watch(() => props.modelValue, (newValue) => {
     }
   }
 }, { immediate: true })
-</script>
-
-
-<script>
-  export default {
-    data: () => ({
-      items: ['foo', 'bar', 'fizz', 'buzz'],
-    }),
-  }
 </script>

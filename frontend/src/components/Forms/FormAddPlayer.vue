@@ -13,25 +13,13 @@
       </v-col>
 
       <v-col cols="12">
-        <v-file-input
+        <v-text-field
           v-model="form.image"
           label="Image"
-          placeholder="File input"
+          placeholder="Lien vers l'image pour la personne"
           variant="outlined"
           density="comfortable"
-          accept="image/*"
-          prepend-icon="mdi-camera"
-          color="secondaryContainer"
-          @update:model-value="handleImageChange"
-        >
-          <template v-slot:prepend>
-            <div class="mr-2">
-              <v-avatar v-if="imagePreview" size="40" rounded>
-                <v-img :src="imagePreview" cover />
-              </v-avatar>
-            </div>
-          </template>
-        </v-file-input>
+        />
       </v-col>
     </v-row>
   </v-container>
