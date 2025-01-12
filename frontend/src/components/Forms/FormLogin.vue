@@ -2,20 +2,22 @@
   <v-container fluid fill-height class="align-center justify-center">
     <v-row justify="center">
       <v-col cols="12" sm="8" md="6" lg="4">
-        <v-card class="elevation-12">
+        <v-card class="bg-tertiaryContainer">
           <v-toolbar color="primary">
             <v-toolbar-title>{{ isLogin ? 'Connexion' : 'Inscription' }}</v-toolbar-title>
           </v-toolbar>
           
           <v-card-text>
-            <v-form ref="form" v-model="valid" @submit.prevent="onSubmit">
+            <v-form ref="form" @update:model-value="onFormValidityChange">
               <v-container>
                 <v-text-field
                   v-model="username"
                   :rules="usernameRules"
                   label="Nom d'utilisateur"
                   prepend-icon="mdi-account"
+                  variant="outlined"
                   required
+                  class="mb-6"
                 ></v-text-field>
 
                 <v-text-field
@@ -24,12 +26,12 @@
                   label="Mot de passe"
                   prepend-icon="mdi-lock"
                   :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                  @click:append="showPassword = !showPassword"
+                  @click:append="togglePassword"
                   :type="showPassword ? 'text' : 'password'"
                   required
+                  variant="outlined"
                 ></v-text-field>
 
-                <!-- Confirmation mot de passe uniquement pour l'inscription -->
                 <v-text-field
                   v-if="!isLogin"
                   v-model="confirmPassword"
@@ -37,9 +39,11 @@
                   label="Confirmer le mot de passe"
                   prepend-icon="mdi-lock"
                   :append-icon="showConfirmPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                  @click:append="showConfirmPassword = !showConfirmPassword"
+                  @click:append="toggleConfirmPassword"
                   :type="showConfirmPassword ? 'text' : 'password'"
                   required
+                  class="mt-6"
+                  variant="outlined"
                 ></v-text-field>
               </v-container>
             </v-form>
@@ -50,8 +54,9 @@
               block
               color="primary"
               :loading="loading"
-              :disabled="!valid"
+              :disabled="!formIsValid"
               @click="onSubmit"
+              variant="flat"
             >
               {{ isLogin ? 'Se connecter' : "S'inscrire" }}
             </v-btn>
@@ -66,7 +71,6 @@
       </v-col>
     </v-row>
 
-    <!-- Snackbar pour les messages -->
     <v-snackbar v-model="snackbar" :color="snackbarColor" timeout="3000">
       {{ snackbarText }}
       <template v-slot:action="{ attrs }">
@@ -78,95 +82,113 @@
   </v-container>
 </template>
 
-<script>
-export default {
-  name: 'LoginRegister',
-  data: () => ({
-    valid: false,
-    loading: false,
-    isLogin: true,
-    showPassword: false,
-    showConfirmPassword: false,
-    
-    // Form fields
-    username: '',
-    password: '',
-    confirmPassword: '',
+<script setup>
+import { ref, computed } from 'vue';
 
-    // Snackbar
-    snackbar: false,
-    snackbarText: '',
-    snackbarColor: 'success',
+const form = ref(null);
+const formIsValid = ref(false);
+const loading = ref(false);
+const isLogin = ref(true);
+const showPassword = ref(false);
+const showConfirmPassword = ref(false);
 
-    // Validation rules
-    usernameRules: [
-      v => !!v || 'Ce champ est requis',
-      v => v.length <= 50 || 'Le nom doit faire moins de 50 caractères'
-    ],
-    passwordRules: [
-      v => !!v || 'Le mot de passe est requis',
-      v => v.length >= 8 || 'Le mot de passe doit faire au moins 8 caractères',
-      v => /\d/.test(v) || 'Le mot de passe doit contenir au moins un chiffre',
-      v => /[a-z]/.test(v) || 'Le mot de passe doit contenir au moins une minuscule',
-      v => /[A-Z]/.test(v) || 'Le mot de passe doit contenir au moins une majuscule'
-    ],
-    confirmPasswordRules: [
-      v => !!v || 'La confirmation du mot de passe est requise',
-      v => v === this.password || 'Les mots de passe ne correspondent pas'
-    ]
-  }),
+const username = ref('');
+const password = ref('');
+const confirmPassword = ref('');
 
-  methods: {
-    async onSubmit() {
-      if (!this.$refs.form.validate()) return;
+const snackbar = ref(false);
+const snackbarText = ref('');
+const snackbarColor = ref('success');
 
-      this.loading = true;
+const usernameRules = [
+  v => !!v || 'Ce champ est requis',
+  v => v.length <= 50 || 'Le nom doit faire moins de 50 caractères'
+];
 
-      try {
-        if (this.isLogin) {
-          // Logique de connexion
-          await this.login();
-        } else {
-          // Logique d'inscription
-          await this.register();
-        }
-      } catch (error) {
-        this.showError(error.message);
-      } finally {
-        this.loading = false;
-      }
-    },
+const passwordRules = [
+  v => !!v || 'Le mot de passe est requis',
+  v => v.length >= 8 || 'Le mot de passe doit faire au moins 8 caractères',
+  v => /\d/.test(v) || 'Le mot de passe doit contenir au moins un chiffre',
+  v => /[a-z]/.test(v) || 'Le mot de passe doit contenir au moins une minuscule',
+  v => /[A-Z]/.test(v) || 'Le mot de passe doit contenir au moins une majuscule'
+];
 
-    async login() {
-      // Simulation d'une requête API
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      this.showSuccess('Connexion réussie !');
-      // Redirection ou autre logique après connexion
-    },
+const confirmPasswordRules = computed(() => [
+  v => !!v || 'La confirmation du mot de passe est requise',
+  v => v === password.value || 'Les mots de passe ne correspondent pas'
+]);
 
-    async register() {
-      // Simulation d'une requête API
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      this.showSuccess('Inscription réussie !');
-      // Redirection ou autre logique après inscription
-    },
+const onFormValidityChange = (value) => {
+  formIsValid.value = value;
+};
 
-    toggleForm() {
-      this.isLogin = !this.isLogin;
-      this.$refs.form.reset();
-    },
+const onSubmit = async () => {
+  if (!form.value?.validate()) return;
 
-    showSuccess(message) {
-      this.snackbarColor = 'success';
-      this.snackbarText = message;
-      this.snackbar = true;
-    },
+  loading.value = true;
 
-    showError(message) {
-      this.snackbarColor = 'error';
-      this.snackbarText = message;
-      this.snackbar = true;
+  try {
+    if (isLogin.value) {
+      await login();
+    } else {
+      await register();
     }
+  } catch (error) {
+    showError(error.message);
+  } finally {
+    loading.value = false;
   }
-}
+};
+
+const login = async () => {
+  await new Promise(resolve => setTimeout(resolve, 1000));
+  showSuccess('Connexion réussie !');
+};
+
+const register = async () => {
+  await new Promise(resolve => setTimeout(resolve, 1000));
+  showSuccess('Inscription réussie !');
+};
+
+const toggleForm = () => {
+  isLogin.value = !isLogin.value;
+  form.value?.reset();
+  formIsValid.value = false;
+};
+
+const togglePassword = () => {
+  showPassword.value = !showPassword.value;
+};
+
+const toggleConfirmPassword = () => {
+  showConfirmPassword.value = !showConfirmPassword.value;
+};
+
+const showSuccess = (message) => {
+  snackbarColor.value = 'success';
+  snackbarText.value = message;
+  snackbar.value = true;
+};
+
+const showError = (message) => {
+  snackbarColor.value = 'error';
+  snackbarText.value = message;
+  snackbar.value = true;
+};
 </script>
+
+<style>
+.v-label.v-field-label--floating {
+  background-color: rgb(var(--v-theme-secondaryContainer)) !important;
+  border-radius: 4px !important;
+  padding: 0 4px !important;
+}
+
+.v-field__outline {
+  color: rgb(var(--v-theme-secondary)) !important;
+}
+
+.v-card--variant-elevated {
+ box-shadow: none !important;
+}
+</style>
