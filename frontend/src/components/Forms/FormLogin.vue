@@ -2,62 +2,44 @@
   <v-container fluid fill-height class="align-center justify-center">
     <v-row justify="center">
       <v-col cols="12" sm="8" md="6" lg="4">
-        <v-card class="bg-tertiaryContainer">
+        <v-card class="bg-tertiaryContainer" variant="flat" rounded="lg">
           <v-toolbar color="primary">
             <v-toolbar-title>{{ isLogin ? 'Connexion' : 'Inscription' }}</v-toolbar-title>
           </v-toolbar>
-          
+
           <v-card-text>
             <v-form ref="form" @update:model-value="onFormValidityChange">
               <v-container>
-                <v-text-field
-                  v-model="username"
-                  :rules="usernameRules"
-                  label="Nom d'utilisateur"
-                  prepend-icon="mdi-account"
-                  variant="outlined"
-                  required
-                  class="mb-6"
-                ></v-text-field>
+                <div v-if="!isLogin" class="mb-6">
+                  <div class="d-flex flex-column align-center">
+                    <v-avatar size="120" color="grey-lighten-2" class="mb-4">
+                      <v-img v-if="previewImage" :src="previewImage" alt="Preview" cover></v-img>
+                      <v-icon v-else size="48" color="grey-darken-2">mdi-account</v-icon>
+                    </v-avatar>
+                  </div>
 
-                <v-text-field
-                  v-model="password"
-                  :rules="passwordRules"
-                  label="Mot de passe"
-                  prepend-icon="mdi-lock"
-                  :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                  @click:append="togglePassword"
-                  :type="showPassword ? 'text' : 'password'"
-                  required
-                  variant="outlined"
-                ></v-text-field>
+                  <v-file-input v-model="profileImage" accept="image/*" label="Image de profil"
+                    prepend-icon="mdi-camera" show-size variant="outlined"
+                    @update:model-value="handleImageChange"></v-file-input>
+                </div>
 
-                <v-text-field
-                  v-if="!isLogin"
-                  v-model="confirmPassword"
-                  :rules="confirmPasswordRules"
-                  label="Confirmer le mot de passe"
-                  prepend-icon="mdi-lock"
-                  :append-icon="showConfirmPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                  @click:append="toggleConfirmPassword"
-                  :type="showConfirmPassword ? 'text' : 'password'"
-                  required
-                  class="mt-6"
-                  variant="outlined"
-                ></v-text-field>
+                <v-text-field v-model="username" :rules="usernameRules" label="Nom d'utilisateur"
+                  prepend-icon="mdi-account" variant="outlined" required class="mb-6"></v-text-field>
+
+                <v-text-field v-model="password" :rules="passwordRules" label="Mot de passe" prepend-icon="mdi-lock"
+                  :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'" @click:append="togglePassword"
+                  :type="showPassword ? 'text' : 'password'" required variant="outlined" class="mb-6"></v-text-field>
+
+                <v-text-field v-if="!isLogin" v-model="confirmPassword" :rules="confirmPasswordRules"
+                  label="Confirmer le mot de passe" prepend-icon="mdi-lock"
+                  :append-icon="showConfirmPassword ? 'mdi-eye' : 'mdi-eye-off'" @click:append="toggleConfirmPassword"
+                  :type="showConfirmPassword ? 'text' : 'password'" required variant="outlined"></v-text-field>
               </v-container>
             </v-form>
           </v-card-text>
 
           <v-card-actions class="px-4 pb-4">
-            <v-btn
-              block
-              color="primary"
-              :loading="loading"
-              :disabled="!formIsValid"
-              @click="onSubmit"
-              variant="flat"
-            >
+            <v-btn block color="primary" :loading="loading" :disabled="!formIsValid" @click="onSubmit" variant="flat">
               {{ isLogin ? 'Se connecter' : "S'inscrire" }}
             </v-btn>
           </v-card-actions>
@@ -83,7 +65,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 
 const form = ref(null);
 const formIsValid = ref(false);
@@ -95,6 +77,9 @@ const showConfirmPassword = ref(false);
 const username = ref('');
 const password = ref('');
 const confirmPassword = ref('');
+const profileImage = ref(null);
+const previewImage = ref(null);
+const imageBase64 = ref(null);
 
 const snackbar = ref(false);
 const snackbarText = ref('');
@@ -118,15 +103,52 @@ const confirmPasswordRules = computed(() => [
   v => v === password.value || 'Les mots de passe ne correspondent pas'
 ]);
 
+const convertToBase64 = (file) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
+};
+
+const handleImageChange = async (file) => {
+  if (file) {
+    try {
+      imageBase64.value = await convertToBase64(file);
+      if (previewImage.value) {
+        URL.revokeObjectURL(previewImage.value);
+      }
+      previewImage.value = URL.createObjectURL(file);
+    } catch (error) {
+      showError('Erreur lors du traitement de l\'image');
+    }
+  } else {
+    if (previewImage.value) {
+      URL.revokeObjectURL(previewImage.value);
+    }
+    previewImage.value = null;
+    imageBase64.value = null;
+  }
+};
+
+watch(isLogin, (newValue) => {
+  if (newValue) {
+    if (previewImage.value) {
+      URL.revokeObjectURL(previewImage.value);
+      previewImage.value = null;
+    }
+    imageBase64.value = null;
+  }
+});
+
 const onFormValidityChange = (value) => {
   formIsValid.value = value;
 };
 
 const onSubmit = async () => {
   if (!form.value?.validate()) return;
-
   loading.value = true;
-
   try {
     if (isLogin.value) {
       await login();
@@ -146,6 +168,11 @@ const login = async () => {
 };
 
 const register = async () => {
+  const userData = {
+    username: username.value,
+    password: password.value,
+    profileImage: imageBase64.value
+  };
   await new Promise(resolve => setTimeout(resolve, 1000));
   showSuccess('Inscription réussie !');
 };
@@ -154,6 +181,12 @@ const toggleForm = () => {
   isLogin.value = !isLogin.value;
   form.value?.reset();
   formIsValid.value = false;
+  if (previewImage.value) {
+    URL.revokeObjectURL(previewImage.value);
+    previewImage.value = null;
+  }
+  imageBase64.value = null;
+  profileImage.value = null;
 };
 
 const togglePassword = () => {
@@ -186,9 +219,5 @@ const showError = (message) => {
 
 .v-field__outline {
   color: rgb(var(--v-theme-secondary)) !important;
-}
-
-.v-card--variant-elevated {
- box-shadow: none !important;
 }
 </style>
