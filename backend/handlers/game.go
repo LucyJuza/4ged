@@ -12,7 +12,7 @@ import (
 	"gorm.io/gorm"
 )
 
-const pageSize = 100
+const pageSize = 50
 
 func GetGames(c *fiber.Ctx) error {
 	id := c.Params("id")
@@ -30,7 +30,7 @@ func GetGames(c *fiber.Ctx) error {
 			return c.SendStatus(404)
 		}
 	} else {
-		err := paginate(getGames().Find(&games), pageIndex).Error
+		err := paginate(config.DB, pageIndex).Find(&games).Error
 		if err != nil {
 			return c.Status(500).SendString(err.Error())
 		}
@@ -96,7 +96,7 @@ func addGame(game *entities.Game) (*entities.Game, error) {
 	res = config.DB.Save(&game)
 
 	if res.Error != nil {
-		return nil, errors.New("Problem while adding data")
+		return nil, errors.New("problem while adding data")
 	}
 
 	return game, nil
@@ -112,7 +112,7 @@ func addGames(games *[]entities.Game) ([]entities.Game, error) {
 	res = config.DB.Save(&games)
 
 	if res.Error != nil {
-		return nil, errors.New("Problem while adding data")
+		return nil, errors.New("problem while adding data")
 	}
 
 	return *games, nil

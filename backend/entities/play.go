@@ -2,6 +2,7 @@ package entities
 
 type Play struct {
 	ID       uint     `gorm:"primaryKey" json:"id"`
+	UserID   uint     `json:"userId"`
 	GameId   uint     `json:"gameId"`
 	Date     string   `gorm:"type:date" json:"date"`
 	Location string   `json:"location"`

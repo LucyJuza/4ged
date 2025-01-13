@@ -15,12 +15,21 @@ func Init(app *fiber.App) {
 	app.Post("/batch/games", handlers.AddGames)
 
 	// Get users (by id)
+	app.Get("/users/:id<int>?", handlers.GetUsers)
 
 	// Login -> user
+	app.Post("/login", handlers.Login)
 
 	// Register -> user already exists
+	app.Post("/register", handlers.Register)
+
+	userID := app.Group("/users/:id<int>/")
 
 	// Post/Delete games for user
+	userID.Post("games", handlers.AddUserGame)
+	userID.Delete("games", handlers.AddUserGame)
+
+	// userID.Delete("games/:id", handlers)
 
 	// Post/Delete plays for user
 

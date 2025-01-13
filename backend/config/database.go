@@ -44,6 +44,8 @@ func Connect() error {
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
 		SkipDefaultTransaction: true,
 		PrepareStmt:            true,
+		TranslateError:         true,
+		CreateBatchSize:        100,
 	})
 	if err != nil {
 		log.Error("Couldn't open connection to db")
@@ -64,6 +66,7 @@ func Connect() error {
 	db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{
 		SkipDefaultTransaction: true,
 		PrepareStmt:            true,
+		TranslateError:         true,
 		CreateBatchSize:        100,
 	})
 	if err != nil {
@@ -88,6 +91,9 @@ func Connect() error {
 		panic(err)
 	}
 
+	if err := db.AutoMigrate(&entities.UGame{}); err != nil {
+		panic(err)
+	}
 	DB = db
 
 	return nil
