@@ -65,7 +65,12 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue';
+import { useAppStore } from '@/stores/app';
+import { ref, computed } from 'vue';
+import { useRouter } from 'vue-router';
+
+const appStore = useAppStore()
+const router = useRouter()
 
 const form = ref(null);
 const formIsValid = ref(false);
@@ -163,18 +168,13 @@ const onSubmit = async () => {
 };
 
 const login = async () => {
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  showSuccess('Connexion réussie !');
+  appStore.login(username.value,password.value)
+  router.push('/')
 };
 
 const register = async () => {
-  const userData = {
-    username: username.value,
-    password: password.value,
-    profileImage: imageBase64.value
-  };
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  showSuccess('Inscription réussie !');
+  appStore.register(username.value,password.value,imageBase64.value)
+  router.push('/')
 };
 
 const toggleForm = () => {

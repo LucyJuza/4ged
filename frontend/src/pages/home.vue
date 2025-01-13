@@ -7,6 +7,7 @@
           :height="75"
           :width="75"
           :aspect-ratio="1/1"
+          cover
           :src="appStore.userData.image"
           />
         </div>
@@ -27,8 +28,8 @@
                 <div style="width:200px; height: 100px;" v-for="play in last4Plays">
                   <ImageCard
                   @click="() => router.push(`/plays/${play.id}/details`)"
-                  :src="appStore.userData.games.find(g => g.id === play.gameId).image"
-                  :text="appStore.userData.games.find(g => g.id === play.gameId).name"
+                  :src="appStore.games.find(g => g.id === play.gameId).image"
+                  :text="appStore.games.find(g => g.id === play.gameId).name"
                   :subtext="play.winners.includes(appStore.userData.personId) ? 'Gagnée' : 'Perdue'"/>
                 </div>
               </HorizontalScroll>
@@ -37,8 +38,8 @@
               <div style="width:280px; height: 200px;" v-for="play in last4Plays">
                 <ImageCard 
                   @click="() => router.push(`/plays/${play.id}/details`)"
-                  :src="appStore.userData.games.find(g => g.id === play.gameId).image"
-                  :text="appStore.userData.games.find(g => g.id === play.gameId).name"
+                  :src="appStore.games.find(g => g.id === play.gameId).image"
+                  :text="appStore.games.find(g => g.id === play.gameId).name"
                   :subtext="play.winners.includes(appStore.userData.personId) ? 'Gagnée' : 'Perdue'"/>
               </div>
             </div>
@@ -88,7 +89,7 @@
         rounded="lg"
         color="primary"
         size="56"
-        elevation="200"
+        elevation="8"
         >
           <v-icon size="32">
             mdi-close
@@ -126,6 +127,7 @@ import { useDisplay } from 'vuetify';
 const { smAndDown } = useDisplay()
 const router = useRouter()
 const appStore = useAppStore()
-const last4Plays = appStore.userData.plays.sort((a,b) => (new Date(b.date)) - (new Date(a.date)) ).slice(0,4)
+let last4Plays = []
+last4Plays = appStore.userData?.plays.sort((a,b) => (new Date(b.date)) - (new Date(a.date)) ).slice(0,4)
 const fabGroupOpenned = ref(false)
 </script>

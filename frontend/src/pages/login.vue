@@ -3,7 +3,7 @@
 </template>
 <route lang="yaml">
 meta:
-  title: "Login"
+  layout: login
 </route>
 <script setup>
 import FormLogin from '@/components/Forms/FormLogin.vue';

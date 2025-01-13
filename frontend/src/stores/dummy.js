@@ -4,49 +4,43 @@ import { defineStore } from 'pinia'
 import dummyUserDatas from '../../dummy-user-datas.json'
 import dummyGenres from '../../dummy-genres.json'
 import dummyGames from '../../dummy-games.json'
+import { login, register } from '@/utils/dummy-auth';
 export const useDummyStore = defineStore('app', {
   state: () => ({
-    userData: {
-      "id" : dummyUserDatas.id,
-      "personId": dummyUserDatas.personId,
-      "name": dummyUserDatas.name,
-      "image": dummyUserDatas.image,
-      "games": dummyUserDatas.games,
-      "plays": dummyUserDatas.plays,
-      "persons": dummyUserDatas.persons
-    },
+    userData: undefined,
     genres: dummyGenres,
     games: dummyGames,
-    filteredUserGames: dummyUserDatas.games,
+    filteredUserGames: undefined,
     filteredGames: dummyGames,
     selectedGameIdForPlayCreation: undefined,
-    selectedPlayIdForRepetition: undefined
+    selectedPlayIdForRepetition: undefined,
+    userId: undefined
   }),
   actions: {
-    filterGames(searchFilter){
+    filterGames(searchFilter) {
       searchFilter = searchFilter.toLowerCase()
       this.filteredUserGames = [...this.userData.games].filter(g => g.name.toLowerCase().includes(searchFilter))
       this.filteredGames = [...this.games].filter(g => g.name.toLowerCase().includes(searchFilter))
     },
-    getGameById(id){
+    getGameById(id) {
       return this.games.find(g => g.id == id)
     },
-    getGameHistory(gameId){
+    getGameHistory(gameId) {
       return this.userData.plays.filter(p => p.gameId == gameId)
     },
-    getPlayById(id){
+    getPlayById(id) {
       return this.userData.plays.find(p => p.id == id)
     },
-    getPersonById(pId){
+    getPersonById(pId) {
       return this.userData.persons.find(p => p.id === pId)
     },
-    setSelectedGameIdForPlayCreation(id){
+    setSelectedGameIdForPlayCreation(id) {
       this.selectedGameIdForPlayCreation = id
     },
-    setSelectedPlayIdForRepetition(id){
+    setSelectedPlayIdForRepetition(id) {
       this.selectedPlayIdForRepetition = id
     },
-    getStatistics(){
+    getStatistics() {
       const playtime = this.userData.plays.reduce((acc,curr) => acc+= curr.duration,0)
       const nPlays = this.userData.plays.length
       const nGames = this.userData.games.length
@@ -76,7 +70,7 @@ export const useDummyStore = defineStore('app', {
         personalWinrate: personalWinrate
       }
     },
-    addGame(values){
+    addGame(values) {
       const id =  uuidv4()
       this.userData.games.push({
         id: id,
@@ -91,8 +85,8 @@ export const useDummyStore = defineStore('app', {
         image: values.image
       })
     },
-    addPerson(values){
-      const id =  uuidv4()
+    addPerson(values) {
+      const id = uuidv4()
       this.userData.persons.push({
         id: id,
         name: values.name,
@@ -100,8 +94,8 @@ export const useDummyStore = defineStore('app', {
         winrate: 0
       })
     },
-    addPlay(values){
-      const id =  uuidv4()
+    addPlay(values) {
+      const id = uuidv4()
       this.userData.plays.push({
         id: id,
         gameId: values.gameId,
@@ -111,6 +105,53 @@ export const useDummyStore = defineStore('app', {
         participants: values.participants,
         winners: values.winners
       })
+      const isGameAlreadyRegistered = this.userData.games.find(g => g.id === values.gameId) != undefined
+      if (!isGameAlreadyRegistered){
+        this.userData.games.push(
+          this.games.find(g => g.id === values.gameId)
+        )
+      }
+    },
+    login(username,password) {
+      const userId = login(username,password)
+      console.log("found user: " + userId)
+      if (userId) {
+        this.userId = userId
+        if(userId == "test_player"){
+          this.userData = {
+            "id" : dummyUserDatas.id,
+            "personId": dummyUserDatas.personId,
+            "name": dummyUserDatas.name,
+            "image": dummyUserDatas.image,
+            "games": dummyUserDatas.games,
+            "plays": dummyUserDatas.plays,
+            "persons": dummyUserDatas.persons
+          }
+          this.filteredUserGames = dummyUserDatas.games
+        }
+      }
+    },
+    register(username,password,image) {
+      const userId = register(username,password)
+
+      this.userId = userId
+      this.userData = {
+        "id" : userId,
+        "personId": userId,
+        "name": username,
+        "image": image,
+        "games": [],
+        "plays": [],
+        "persons": [
+          {
+            "id": userId,
+            "name": username,
+            "image": image,
+            "winrate": 0
+          }
+        ]
+      }
+      this.filteredUserGames = []
     }
   }
 })
