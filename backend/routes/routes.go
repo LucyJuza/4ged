@@ -7,10 +7,13 @@ import (
 )
 
 func Init(app *fiber.App) {
+	// Games and users query parameters : pageIndex
+
 	// Games routes
 	app.Get("/games/:id<int>?", handlers.GetGames)
 	app.Get("/games/search", handlers.SearchGames)
-	// Search games
+
+	// Search games query parameter : filter
 	app.Post("/games", handlers.AddGame)
 	app.Post("/batch/games", handlers.AddGames)
 

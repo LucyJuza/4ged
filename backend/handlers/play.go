@@ -23,6 +23,18 @@ func AddUserPlay(c *fiber.Ctx) error {
 		return c.Status(fiber.ErrBadRequest.Code).SendString("Bad play format")
 	}
 
+	game := entities.Game{}
+	config.DB.Find(&game, play.GameId)
+
+	if game.ID != play.GameId {
+		return c.Status(fiber.ErrNotFound.Code).SendString("No such game")
+	}
+
+	err = config.DB.Model(&user).Association("Games").Append(&game)
+	if err != nil {
+		return c.Status(fiber.ErrBadRequest.Code).SendString("Error while adding play")
+	}
+
 	err = config.DB.Model(&user).Association("Plays").Append(&play)
 	if err != nil {
 		return c.Status(fiber.ErrBadRequest.Code).SendString("Error while adding play")

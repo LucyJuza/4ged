@@ -26,14 +26,14 @@ func GetUsers(c *fiber.Ctx) error {
 		if err != nil {
 			return c.SendStatus(404)
 		}
+		return c.Status(200).JSON(users[0])
 	} else {
 		err := paginate(getUsers().Find(&users), pageIndex).Error
 		if err != nil {
 			return c.Status(500).SendString(err.Error())
 		}
+		return c.Status(200).JSON(users)
 	}
-
-	return c.Status(200).JSON(users)
 }
 
 func Login(c *fiber.Ctx) error {

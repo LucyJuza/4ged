@@ -11,7 +11,7 @@ import (
 	"gorm.io/gorm"
 )
 
-const pageSize = 50
+const pageSize = 100
 
 func GetGames(c *fiber.Ctx) error {
 	id := c.Params("id")
@@ -28,14 +28,14 @@ func GetGames(c *fiber.Ctx) error {
 		if err != nil {
 			return c.SendStatus(404)
 		}
+		return c.Status(200).JSON(games[0])
 	} else {
 		err := paginate(config.DB, pageIndex).Find(&games).Error
 		if err != nil {
 			return c.Status(500).SendString(err.Error())
 		}
+		return c.Status(200).JSON(games)
 	}
-
-	return c.Status(200).JSON(games)
 }
 
 func AddGame(c *fiber.Ctx) error {
