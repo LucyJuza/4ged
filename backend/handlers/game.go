@@ -78,7 +78,7 @@ func SearchGames(c *fiber.Ctx) error {
 		return c.Status(fiber.ErrBadRequest.Code).SendString(err.Error())
 	}
 
-	paginate(getGames().Where("name LIKE ?", "%"+filter+"%").Find(&games), pageIndex)
+	paginate(getGames(), pageIndex).Where("name LIKE ?", "%"+filter+"%").Find(&games)
 
 	return c.JSON(games)
 }
