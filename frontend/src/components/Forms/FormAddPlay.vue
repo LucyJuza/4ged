@@ -1,5 +1,5 @@
 <template>
-  <v-autocomplete v-model="form.selectedGame" :items="formatedGames" label="Jeu joué"
+  <v-autocomplete required v-model="form.selectedGame" :items="formatedGames" label="Jeu joué"
     placeholder="Sélectionner le jeu joué" variant="outlined" item-title="title" item-value="value">
     <template v-slot="{ props, item }">
       <v-chip v-bind="props" class="bg-secondaryContainer">
@@ -8,16 +8,16 @@
     </template>
   </v-autocomplete>
 
-  <v-text-field type="date" v-model="form.date" label="Date de la partie" placeholder="dd/mm/yyyy" variant="outlined"
+  <v-text-field required type="date" v-model="form.date" label="Date de la partie" placeholder="dd/mm/yyyy" variant="outlined"
     density="comfortable" color="secondaryContainer" />
 
-  <v-text-field v-model="form.location" label="Lieu" placeholder="Lieu ou s'est déroulée la partie" variant="outlined"
+  <v-text-field required v-model="form.location" label="Lieu" placeholder="Lieu ou s'est déroulée la partie" variant="outlined"
     density="comfortable" color="secondaryContainer" />
 
-  <v-text-field v-model="form.duration" label="Durée (minutes)" placeholder="Durée de la partie en minutes"
+  <v-text-field required v-model="form.duration" label="Durée (minutes)" placeholder="Durée de la partie en minutes"
     variant="outlined" density="comfortable" type="number" color="secondaryContainer" />
 
-  <v-autocomplete v-model="form.players" :items="formattedPlayers" label="Participant·e·s" chips multiple
+  <v-autocomplete required v-model="form.players" :items="formattedPlayers" label="Participant·e·s" chips multiple
     placeholder="Ajouter des participant·e·s" variant="outlined" item-title="title" item-value="value">
     <template v-slot:chip="{ props, item }">
       <v-chip v-bind="props" class="bg-secondaryContainer">
@@ -26,7 +26,7 @@
     </template>
   </v-autocomplete>
 
-  <v-autocomplete v-model="form.winners" :items="winnablePlayers" label="Gagnant·e·s" chips multiple
+  <v-autocomplete required v-model="form.winners" :items="winnablePlayers" label="Gagnant·e·s" chips multiple
     placeholder="Sélectionner les gagnant·e·s" variant="outlined" item-title="title" item-value="value">
     <template v-slot:chip="{ props, item }">
       <v-chip v-bind="props" class="bg-secondaryContainer">

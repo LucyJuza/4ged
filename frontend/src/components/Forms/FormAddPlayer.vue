@@ -1,9 +1,8 @@
 <template>
-  <v-text-field v-model="form.name" label="Nom" placeholder="Nom de la personne" variant="outlined"
+  <v-text-field required v-model="form.name" label="Nom" placeholder="Nom de la personne" variant="outlined"
     density="comfortable" color="secondaryContainer" />
-
-  <v-text-field v-model="form.image" label="Image" placeholder="Lien vers l'image pour la personne" variant="outlined"
-    density="comfortable" />
+  <v-file-input v-model="form.image" accept="image/*" label="Image" prepend-icon="mdi-camera" show-size
+    variant="outlined" required @update:model-value="handleImageChange" />
 </template>
 
 <script setup>
@@ -23,20 +22,38 @@ const form = ref({
   image: null,
 });
 
-const imagePreview = ref(null);
+const previewImage = ref(null);
+const imageBase64 = ref(null);
 
-const handleImageChange = (file) => {
-  if (!file) {
-    imagePreview.value = null;
-    return;
+const handleImageChange = async (file) => {
+  if (file) {
+    try {
+      imageBase64.value = await convertToBase64(file);
+      if (previewImage.value) {
+        URL.revokeObjectURL(previewImage.value);
+      }
+      previewImage.value = URL.createObjectURL(file);
+    } catch (error) {
+      showError('Erreur lors du traitement de l\'image');
+    }
+  } else {
+    if (previewImage.value) {
+      URL.revokeObjectURL(previewImage.value);
+    }
+    previewImage.value = null;
+    imageBase64.value = null;
   }
-
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    imagePreview.value = e.target.result;
-  };
-  reader.readAsDataURL(file);
 };
+
+const convertToBase64 = (file) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
+};
+
 
 watch(
   form,

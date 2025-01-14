@@ -8,33 +8,32 @@
           </v-toolbar>
 
           <v-card-text>
-            <v-form ref="form" @update:model-value="onFormValidityChange">
-              <v-container>
-                <div v-if="!isLogin" class="mb-6">
-                  <div class="d-flex flex-column align-center">
-                    <v-avatar size="120" color="grey-lighten-2" class="mb-4">
-                      <v-img v-if="previewImage" :src="previewImage" alt="Preview" cover></v-img>
-                      <v-icon v-else size="48" color="grey-darken-2">mdi-account</v-icon>
-                    </v-avatar>
-                  </div>
-
-                  <v-file-input v-model="profileImage" accept="image/*" label="Image de profil"
-                    prepend-icon="mdi-camera" show-size variant="outlined"
-                    @update:model-value="handleImageChange"></v-file-input>
+            <v-form ref="form" @keyup.enter="onSubmit" @update:model-value="onFormValidityChange">
+            <v-container>
+              <div v-if="!isLogin" class="mb-6">
+                <div class="d-flex flex-column align-center">
+                  <v-avatar size="120" color="grey-lighten-2" class="mb-4">
+                    <v-img v-if="previewImage" :src="previewImage" alt="Preview" cover></v-img>
+                    <v-icon v-else size="48" color="grey-darken-2">mdi-account</v-icon>
+                  </v-avatar>
                 </div>
 
-                <v-text-field v-model="username" :rules="usernameRules" label="Nom d'utilisateur"
-                  prepend-icon="mdi-account" variant="outlined" required class="mb-6"></v-text-field>
+                <v-file-input v-model="profileImage" accept="image/*" label="Image de profil" prepend-icon="mdi-camera"
+                  show-size variant="outlined" @update:model-value="handleImageChange"></v-file-input>
+              </div>
 
-                <v-text-field v-model="password" :rules="passwordRules" label="Mot de passe" prepend-icon="mdi-lock"
-                  :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'" @click:append="togglePassword"
-                  :type="showPassword ? 'text' : 'password'" required variant="outlined" class="mb-6"></v-text-field>
+              <v-text-field v-model="username" :rules="usernameRules" label="Nom d'utilisateur"
+                prepend-icon="mdi-account" variant="outlined" required class="mb-6"></v-text-field>
 
-                <v-text-field v-if="!isLogin" v-model="confirmPassword" :rules="confirmPasswordRules"
-                  label="Confirmer le mot de passe" prepend-icon="mdi-lock"
-                  :append-icon="showConfirmPassword ? 'mdi-eye' : 'mdi-eye-off'" @click:append="toggleConfirmPassword"
-                  :type="showConfirmPassword ? 'text' : 'password'" required variant="outlined"></v-text-field>
-              </v-container>
+              <v-text-field v-model="password" :rules="passwordRules" label="Mot de passe" prepend-icon="mdi-lock"
+                :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'" @click:append="togglePassword"
+                :type="showPassword ? 'text' : 'password'" required variant="outlined" class="mb-6"></v-text-field>
+
+              <v-text-field v-if="!isLogin" v-model="confirmPassword" :rules="confirmPasswordRules"
+                label="Confirmer le mot de passe" prepend-icon="mdi-lock"
+                :append-icon="showConfirmPassword ? 'mdi-eye' : 'mdi-eye-off'" @click:append="toggleConfirmPassword"
+                :type="showConfirmPassword ? 'text' : 'password'" required variant="outlined"></v-text-field>
+            </v-container>
             </v-form>
           </v-card-text>
 
@@ -168,12 +167,12 @@ const onSubmit = async () => {
 };
 
 const login = async () => {
-  appStore.login(username.value,password.value)
+  appStore.login(username.value, password.value)
   router.push('/')
 };
 
 const register = async () => {
-  appStore.register(username.value,password.value,imageBase64.value)
+  appStore.register(username.value, password.value, imageBase64.value)
   router.push('/')
 };
 

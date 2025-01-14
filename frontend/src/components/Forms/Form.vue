@@ -2,7 +2,11 @@
   <v-container class="fill-height align-center">
     <v-row align="center" justify="center">
       <v-col cols="12" sm="8" md="6" lg="4">
-        <v-form @submit.prevent="submitForm" class="pa-0">
+        <v-form 
+          ref="form"
+          @submit.prevent="handleSubmit" 
+          class="pa-0"
+        >
           <div>
             <slot :form-data="formData" @update:form-data="updateFormData"></slot>
           </div>
@@ -31,15 +35,19 @@
 import { ref } from 'vue'
 
 const emit = defineEmits(['submit', 'cancel'])
-
+const form = ref(null)
 const formData = ref({})
 
 const updateFormData = (newData) => {
   formData.value = newData
 }
 
-const submitForm = () => {
-  emit('submit', formData.value)
+const handleSubmit = async () => {
+  const { valid } = await form.value.validate()
+  
+  if (valid) {
+    emit('submit', formData.value)
+  }
 }
 </script>
 

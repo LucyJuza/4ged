@@ -1,10 +1,10 @@
 <template>
   <v-text-field v-model="form.name" label="Nom" placeholder="Mon super jeu custom" variant="outlined"
-    density="comfortable" />
-  <v-text-field v-model="form.image" label="Image" placeholder="Lien vers l'image du jeu" variant="outlined"
-    density="comfortable" />
+    density="comfortable" required :rules="nameRules" />
+  <v-file-input v-model="form.image" accept="image/*" label="Image" prepend-icon="mdi-camera" show-size
+    variant="outlined" required :rules="imageRules" @update:model-value="handleImageChange" />
   <v-autocomplete v-model="form.genres" :items="items" label="Genres" chips multiple placeholder="Ajouter des genres"
-    variant="outlined">
+    variant="outlined" required :rules="genreRules">
     <template v-slot:chip="{ props, item }">
       <v-chip v-bind="props" class="bg-secondaryContainer">
         {{ item.raw }}
@@ -16,7 +16,12 @@
 <script setup>
 import { useAppStore } from '@/stores/app'
 import { ref, watch } from 'vue'
+const nameRules = [v => !!v || 'Le nom est requis']
+const imageRules = [v => !!v || 'L\'image est requise']
+const genreRules = [v => v?.length > 0 || 'Au moins un genre est requis']
 const appStore = useAppStore()
+const previewImage = ref(null);
+const imageBase64 = ref(null);
 const items = appStore.genres.map(g => g.name)
 const props = defineProps({
   modelValue: {
@@ -33,20 +38,34 @@ const form = ref({
   genres: []
 })
 
-const imagePreview = ref(null)
-
-const handleImageChange = (file) => {
-  if (!file) {
-    imagePreview.value = null
-    return
+const handleImageChange = async (file) => {
+  if (file) {
+    try {
+      imageBase64.value = await convertToBase64(file);
+      if (previewImage.value) {
+        URL.revokeObjectURL(previewImage.value);
+      }
+      previewImage.value = URL.createObjectURL(file);
+    } catch (error) {
+      showError('Erreur lors du traitement de l\'image');
+    }
+  } else {
+    if (previewImage.value) {
+      URL.revokeObjectURL(previewImage.value);
+    }
+    previewImage.value = null;
+    imageBase64.value = null;
   }
+};
 
-  const reader = new FileReader()
-  reader.onload = (e) => {
-    imagePreview.value = e.target.result
-  }
-  reader.readAsDataURL(file)
-}
+const convertToBase64 = (file) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
+};
 
 // Synchronise les changements avec le parent via v-model
 watch(form, (newValue) => {
