@@ -43,7 +43,6 @@ func Connect() error {
 
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
 		SkipDefaultTransaction: true,
-		PrepareStmt:            true,
 		TranslateError:         true,
 		CreateBatchSize:        100,
 	})
@@ -65,7 +64,6 @@ func Connect() error {
 
 	db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{
 		SkipDefaultTransaction: true,
-		PrepareStmt:            true,
 		TranslateError:         true,
 		CreateBatchSize:        100,
 	})
