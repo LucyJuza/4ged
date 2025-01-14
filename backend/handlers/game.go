@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"errors"
-	"log"
 	"strconv"
 
 	"backend/config"
@@ -78,8 +77,6 @@ func SearchGames(c *fiber.Ctx) error {
 	if err != nil {
 		return c.Status(fiber.ErrBadRequest.Code).SendString(err.Error())
 	}
-
-	log.Println(filter)
 
 	paginate(getGames().Where("name LIKE ?", "%"+filter+"%").Find(&games), pageIndex)
 

@@ -27,13 +27,15 @@ func Init(app *fiber.App) {
 
 	// Post/Delete games for user
 	userID.Post("games", handlers.AddUserGame)
-	userID.Delete("games", handlers.AddUserGame)
-
-	// userID.Delete("games/:id", handlers)
+	userID.Delete("games/:gameId<int>", handlers.RemoveUserGame)
 
 	// Post/Delete plays for user
+	userID.Post("plays", handlers.AddUserPlay)
+	userID.Delete("plays/:playId<int>", handlers.RemoveUserPlay)
 
 	// Post/Delete players for user
+	userID.Post("persons", handlers.AddUserPlayer)
+	userID.Delete("persons/:personId<int>", handlers.RemoveUserPlayer)
 
 	// (Stats)
 

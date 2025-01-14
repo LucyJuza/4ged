@@ -91,9 +91,6 @@ func Connect() error {
 		panic(err)
 	}
 
-	if err := db.AutoMigrate(&entities.UGame{}); err != nil {
-		panic(err)
-	}
 	DB = db
 
 	return nil

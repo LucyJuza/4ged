@@ -8,7 +8,6 @@ import (
 	"backend/entities"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/log"
 	"gorm.io/gorm"
 )
 
@@ -44,7 +43,6 @@ func Login(c *fiber.Ctx) error {
 		return c.SendString(err.Error())
 	}
 
-	log.Info(credentials)
 	user := entities.User{Name: credentials.Name, Password: credentials.Password}
 
 	if credentials.Name == "" {
@@ -69,7 +67,7 @@ func Register(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadRequest).SendString("Invalid parameters")
 	}
 
-	user := entities.User{Name: credentials.Name, Password: credentials.Password}
+	user := entities.User{Name: credentials.Name, Password: credentials.Password, ImageUrl: credentials.Image}
 
 	if res := config.DB.Create(&user); res.Error != nil {
 		if errors.Is(res.Error, gorm.ErrDuplicatedKey) {
@@ -78,6 +76,12 @@ func Register(c *fiber.Ctx) error {
 		return c.SendStatus(fiber.ErrInternalServerError.Code)
 	}
 
+	playerUser := entities.Player{Name: user.Name, ImageUrl: user.ImageUrl}
+	if err := config.DB.Model(&user).Association("Players").Append(&playerUser); err != nil {
+		return c.SendStatus(fiber.ErrInternalServerError.Code)
+	}
+
+	user.PlayerId = playerUser.ID
 	if res := config.DB.Save(&user); res.Error != nil {
 		return c.SendStatus(fiber.ErrInternalServerError.Code)
 	}
@@ -93,19 +97,19 @@ func AddUserGame(c *fiber.Ctx) error {
 		return c.Status(fiber.ErrBadRequest.Code).SendString(err.Error())
 	}
 
-	game := entities.UGame{UserID: user.ID}
+	game := entities.Game{}
 
 	if err = c.BodyParser(&game); err != nil {
 		return c.Status(fiber.ErrBadRequest.Code).SendString("Bad game format")
 	}
 
-	err = config.DB.Model(&user).Association("UserGames").Append(&game)
+	err = config.DB.Model(&user).Association("Games").Append(&game)
 	if err != nil {
 		return c.Status(fiber.ErrBadRequest.Code).SendString("Error while adding game")
 	}
 	config.DB.Save(&game)
 
-	return c.JSON(user)
+	return c.JSON(game)
 }
 
 func RemoveUserGame(c *fiber.Ctx) error {
@@ -115,27 +119,19 @@ func RemoveUserGame(c *fiber.Ctx) error {
 	if err != nil {
 		return c.Status(fiber.ErrBadRequest.Code).SendString(err.Error())
 	}
+	gameId := 0
 
-	ugame := entities.UGame{}
-
-	if err = c.BodyParser(&ugame); err == nil {
-		if err = config.DB.Model(&user).Association("UserGames").Delete(ugame); err != nil {
-			return c.Status(fiber.ErrInternalServerError.Code).SendString("An error occured while deleting the game")
-		}
-
-		return c.JSON(ugame)
+	if gameId, err = strconv.Atoi(c.Params("gameId")); err != nil {
+		return c.Status(fiber.ErrBadRequest.Code).SendString("Invalid game id")
 	}
 
 	game := entities.Game{}
 
-	if err = c.BodyParser(&game); err != nil {
-		return c.Status(fiber.ErrNotFound.Code).SendString("No such game")
-	}
+	config.DB.Find(&game, gameId)
 
-	if err = config.DB.Model(&user).Association("Games").Delete(&game); err != nil {
+	if err = config.DB.Model(&user).Association("Games").Delete(game); err != nil {
 		return c.Status(fiber.ErrInternalServerError.Code).SendString("An error occured while deleting the game")
 	}
-
 	return c.JSON(game)
 }
 
@@ -147,8 +143,9 @@ func getUsers() *gorm.DB {
 	return config.DB.
 		Model(&entities.User{}).
 		Preload("Games").
-		Preload("UserGames").
 		Preload("Plays").
+		Preload("Plays.Players").
+		Preload("Plays.Winners").
 		Preload("Players")
 }
 
