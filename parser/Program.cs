@@ -11,7 +11,7 @@ const int DelayBetweenRetries = 1000;
 // Max degree of parallelism for fetching games (higer is better)
 const int MaxDegreeOfParallelism = 5;
 // Test on a smaller dataset to avoid hitting the API too hard (like 15 games instead of 160916)
-const bool TestOnSmolData = true;
+const bool TestOnSmolData = false;
 
 string line;
 List<string> lines = [];
@@ -100,7 +100,7 @@ async Task<Game?> FetchGameWithRetry(string id, int attemptCount = 0)
       Name = boardgame.Elements("name")
         .First(n => (string?)n.Attribute("primary") == "true")
         .Value,
-      ImageUrl = boardgame.Element("image")?.Value ?? string.Empty,
+      Image = boardgame.Element("image")?.Value ?? string.Empty,
       Genres = boardgame.Elements("boardgamecategory")
         .Select(g => g.Value)
         .Select(g => new Genre { Name = g })

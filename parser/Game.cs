@@ -7,7 +7,7 @@ public class Game
   public Game()
   {
     Name = string.Empty;
-    ImageUrl = string.Empty;
+    Image = string.Empty;
     Genres = [];
   }
 }
