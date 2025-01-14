@@ -3,8 +3,8 @@ package entities
 import "time"
 
 type Play struct {
-	ID       uint      `gorm:"primaryKey" json:"id"`
-	UserID   uint      `json:"userId"`
+	ID       uint      `gorm:"primaryKey" json:"id"` // not needed in post
+	UserID   uint      `json:"userId"`               // not needed in post
 	GameId   uint      `json:"gameId"`
 	Date     time.Time `json:"date"`
 	Location string    `json:"location"`
