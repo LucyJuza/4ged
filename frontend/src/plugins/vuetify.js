@@ -11,7 +11,6 @@ import materialExport from "../material-theme-ihm2.json";
 
 // Composables
 import { createVuetify } from 'vuetify'
-console.log(materialExport)
 // https://vuetifyjs.com/en/introduction/why-vuetify/#feature-guides
 export default createVuetify({
   theme: {

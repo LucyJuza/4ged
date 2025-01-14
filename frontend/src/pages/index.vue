@@ -1,21 +1,19 @@
 <template>
-  <p>Contenu Accueil</p>
 </template>
 <route lang="yaml">
 meta:
-  title: "Accueil"
+  layout: login
 </route>
 <script setup>
-import BaseForm from '../components/Forms/Form.vue'
-import FormAddPlay from '../components/Forms/FormAddPlay.vue'
-import FormAddGame from '../components/Forms/FormAddGame.vue'
-import FormAddPlayer from '../components/Forms/FormAddPlayer.vue'
+import { useAuthentication } from '@/composables/authentication';
+import { useRouter } from 'vue-router';
 
-const handleSubmit = (formData) => {
-  console.log('Form submitted:', formData)
-}
-
-const handleCancel = () => {
-  console.log('Form cancelled')
+const router = useRouter()
+const { isAuthenticated } = useAuthentication()
+console.log(isAuthenticated.value)
+if (isAuthenticated.value) {
+  router.push('/home')
+}else {
+  router.push('/login')
 }
 </script>

@@ -1,62 +1,26 @@
 <template>
-  <v-container>
-    <v-row>
-      <v-col cols="12">
-        <v-text-field
-          v-model="form.name"
-          label="Nom"
-          placeholder="Mon super jeu custom"
-          variant="outlined"
-          density="comfortable"
-        />
-      </v-col>
-
-      <v-col cols="12">
-        <v-file-input
-          v-model="form.image"
-          label="Image"
-          placeholder="File input"
-          variant="outlined"
-          accept="image/*"
-          @update:model-value="handleImageChange"
-        >
-          <template v-slot:prepend>
-            <div class="mr-2">
-              <v-avatar v-if="imagePreview" size="40" rounded>
-                <v-img :src="imagePreview" cover />
-              </v-avatar>
-            </div>
-          </template>
-        </v-file-input>
-      </v-col>
-
-      <v-col cols="12">
-        <v-select
-          v-model="form.genres"
-          :items="items"
-          label="Genres"
-          chips
-          multiple
-          placeholder="Ajouter des genres"
-          variant="outlined"
-        >
-          <template v-slot:chip="{ props, item }">
-              <v-chip
-                v-bind="props"
-                class="bg-secondaryContainer"
-              >
-                {{ item.raw }}
-              </v-chip>
-            </template>
-        </v-select>
-      </v-col>
-    </v-row>
-  </v-container>
+  <v-text-field v-model="form.name" label="Nom" placeholder="Mon super jeu custom" variant="outlined"
+    density="comfortable" required :rules="nameRules" />
+  <v-file-input v-model="form.previewImage" accept="image/*" label="Image" prepend-icon="mdi-camera" show-size
+    variant="outlined" required :rules="imageRules" @update:model-value="handleImageChange" />
+  <v-autocomplete v-model="form.genres" :items="items" label="Genres" chips multiple placeholder="Ajouter des genres"
+    variant="outlined" required :rules="genreRules">
+    <template v-slot:chip="{ props, item }">
+      <v-chip v-bind="props" class="bg-secondaryContainer">
+        {{ item.raw }}
+      </v-chip>
+    </template>
+  </v-autocomplete>
 </template>
 
 <script setup>
+import { useAppStore } from '@/stores/app'
 import { ref, watch } from 'vue'
-
+const nameRules = [v => !!v || 'Le nom est requis']
+const imageRules = [v => !!v || 'L\'image est requise']
+const genreRules = [v => v?.length > 0 || 'Au moins un genre est requis']
+const appStore = useAppStore()
+const items = appStore.genres.map(g => g.name)
 const props = defineProps({
   modelValue: {
     type: Object,
@@ -69,23 +33,38 @@ const emit = defineEmits(['update:modelValue'])
 const form = ref({
   name: '',
   image: null,
+  previewImage: null,
   genres: []
 })
 
-const imagePreview = ref(null)
-
-const handleImageChange = (file) => {
-  if (!file) {
-    imagePreview.value = null
-    return
+const handleImageChange = async (file) => {
+  if (file) {
+    try {
+      form.value.image = await convertToBase64(file);
+      if (form.value.previewImage) {
+        URL.revokeObjectURL(previewImage);
+      }
+      form.value.previewImage = URL.createObjectURL(file);
+    } catch (error) {
+      showError('Erreur lors du traitement de l\'image');
+    }
+  } else {
+    if (form.value.previewImage) {
+      URL.revokeObjectURL(form.value.previewImage);
+    }
+    form.value.previewImage = null;
+    form.value.image = null;
   }
+};
 
-  const reader = new FileReader()
-  reader.onload = (e) => {
-    imagePreview.value = e.target.result
-  }
-  reader.readAsDataURL(file)
-}
+const convertToBase64 = (file) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
+};
 
 // Synchronise les changements avec le parent via v-model
 watch(form, (newValue) => {
@@ -101,13 +80,4 @@ watch(() => props.modelValue, (newValue) => {
     }
   }
 }, { immediate: true })
-</script>
-
-
-<script>
-  export default {
-    data: () => ({
-      items: ['foo', 'bar', 'fizz', 'buzz'],
-    }),
-  }
 </script>

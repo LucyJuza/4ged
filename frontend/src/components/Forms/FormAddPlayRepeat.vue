@@ -1,6 +1,6 @@
 <template>
-  <v-autocomplete required v-model="form.selectedGame" :items="formatedGames" label="Jeu joué"
-    placeholder="Sélectionner le jeu joué" variant="outlined" item-title="title" item-value="value">
+  <v-autocomplete required v-model="form.selectedPlay" :items="formatedPlays" label="Partie à répéter"
+    placeholder="Sélectionner la partie jouée" variant="outlined" item-title="title" item-value="value">
     <template v-slot="{ props, item }">
       <v-chip v-bind="props" class="bg-secondaryContainer">
         {{ item.title }}
@@ -8,11 +8,11 @@
     </template>
   </v-autocomplete>
 
-  <v-text-field required type="date" v-model="form.date" label="Date de la partie" placeholder="dd/mm/yyyy" variant="outlined"
-    density="comfortable" color="secondaryContainer" />
+  <v-text-field required type="date" v-model="form.date" label="Date de la partie" placeholder="dd/mm/yyyy"
+    variant="outlined" density="comfortable" color="secondaryContainer" />
 
-  <v-text-field required v-model="form.location" label="Lieu" placeholder="Lieu ou s'est déroulée la partie" variant="outlined"
-    density="comfortable" color="secondaryContainer" />
+  <v-text-field required v-model="form.location" label="Lieu" placeholder="Lieu ou s'est déroulée la partie"
+    variant="outlined" density="comfortable" color="secondaryContainer" />
 
   <v-text-field required v-model="form.duration" label="Durée (minutes)" placeholder="Durée de la partie en minutes"
     variant="outlined" density="comfortable" type="number" color="secondaryContainer" />
@@ -26,7 +26,7 @@
     </template>
   </v-autocomplete>
 
-  <v-autocomplete required v-model="form.winners" :items="winnablePlayers" label="Gagnant·e·s" chips multiple
+  <v-autocomplete v-model="form.winners" :items="winnablePlayers" label="Gagnant·e·s" chips multiple
     placeholder="Sélectionner les gagnant·e·s" variant="outlined" item-title="title" item-value="value">
     <template v-slot:chip="{ props, item }">
       <v-chip v-bind="props" class="bg-secondaryContainer">
@@ -52,7 +52,7 @@ const props = defineProps({
 const emit = defineEmits(["update:modelValue"]);
 
 const availablePlayers = reactiveAppStore.userData.value.persons
-const availableGames = reactiveAppStore.games.value
+const availablePlays = reactiveAppStore.userData.value.plays
 
 const formattedPlayers = computed(() => {
   return availablePlayers.map(player => ({
@@ -61,14 +61,14 @@ const formattedPlayers = computed(() => {
   }));
 });
 
-const formatedGames = computed(() => {
-  return availableGames?.map(game => ({
-    title: game.name,
-    value: game.id
+const formatedPlays = computed(() => {
+  return availablePlays?.map(play => ({
+    title: `Partie du ${(new Date(play.date)).toLocaleDateString()}`,
+    value: play.id
   }));
 });
 const form = ref({
-  selectedGame: "",
+  selectedPlay: "",
   date: "",
   location: "",
   duration: "",

@@ -2,7 +2,7 @@
   <v-container fluid class="pa-0" v-for="item in navigationElements">
     <RouterLink :to="item.path" class="text-decoration-none">
       <v-col class="pa-2 text-onSurface">
-        <v-row v-if="route.currentRoute.value.path == item.path"
+        <v-row v-if="route.currentRoute.value.path.includes(item.path)"
           class="justify-center text-center ma-0 rounded-pill bg-secondaryContainer">
           <v-icon size="32">{{ item.iconSelected }}</v-icon>
         </v-row>
@@ -23,5 +23,4 @@
 import { useRouter } from 'vue-router';
 import { navigationElements } from './navigation';
 const route = useRouter()
-console.log(route.currentRoute.value.path)
 </script>
