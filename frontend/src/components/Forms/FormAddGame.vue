@@ -1,48 +1,16 @@
 <template>
-  <v-container>
-    <v-row>
-      <v-col cols="12">
-        <v-text-field
-          v-model="form.name"
-          label="Nom"
-          placeholder="Mon super jeu custom"
-          variant="outlined"
-          density="comfortable"
-        />
-      </v-col>
-
-      <v-col cols="12">
-        <v-text-field
-          v-model="form.image"
-          label="Image"
-          placeholder="Lien vers l'image du jeu"
-          variant="outlined"
-          density="comfortable"
-        />
-      </v-col>
-
-      <v-col cols="12">
-        <v-autocomplete
-          v-model="form.genres"
-          :items="items"
-          label="Genres"
-          chips
-          multiple
-          placeholder="Ajouter des genres"
-          variant="outlined"
-        >
-          <template v-slot:chip="{ props, item }">
-              <v-chip
-                v-bind="props"
-                class="bg-secondaryContainer"
-              >
-                {{ item.raw }}
-              </v-chip>
-            </template>
-        </v-autocomplete>
-      </v-col>
-    </v-row>
-  </v-container>
+  <v-text-field v-model="form.name" label="Nom" placeholder="Mon super jeu custom" variant="outlined"
+    density="comfortable" />
+  <v-text-field v-model="form.image" label="Image" placeholder="Lien vers l'image du jeu" variant="outlined"
+    density="comfortable" />
+  <v-autocomplete v-model="form.genres" :items="items" label="Genres" chips multiple placeholder="Ajouter des genres"
+    variant="outlined">
+    <template v-slot:chip="{ props, item }">
+      <v-chip v-bind="props" class="bg-secondaryContainer">
+        {{ item.raw }}
+      </v-chip>
+    </template>
+  </v-autocomplete>
 </template>
 
 <script setup>

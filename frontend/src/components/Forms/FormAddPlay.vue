@@ -1,109 +1,39 @@
 <template>
-  <v-container>
-    <v-row>
-      <v-col cols="12">
-        <v-autocomplete
-          v-model="form.selectedGame"
-          :items="formatedGames"
-          label="Jeu joué"
-          placeholder="Sélectionner le jeu joué"
-          variant="outlined"
-          item-title="title"
-          item-value="value"
-        >
-          <template v-slot="{ props, item }">
-                  <v-chip
-              v-bind="props"
-              class="bg-secondaryContainer"
-                  >
-              {{ item.title }}
-                  </v-chip>
-          </template>
-        </v-autocomplete>
-      </v-col>
+  <v-autocomplete v-model="form.selectedGame" :items="formatedGames" label="Jeu joué"
+    placeholder="Sélectionner le jeu joué" variant="outlined" item-title="title" item-value="value">
+    <template v-slot="{ props, item }">
+      <v-chip v-bind="props" class="bg-secondaryContainer">
+        {{ item.title }}
+      </v-chip>
+    </template>
+  </v-autocomplete>
 
-      <v-col cols="12">
-        <v-text-field
-        type="date"
-          v-model="form.date"
-          label="Date de la partie"
-          placeholder="dd/mm/yyyy"
-          variant="outlined"
-          density="comfortable"
-          color="secondaryContainer"
-        />
-      </v-col>
+  <v-text-field type="date" v-model="form.date" label="Date de la partie" placeholder="dd/mm/yyyy" variant="outlined"
+    density="comfortable" color="secondaryContainer" />
 
-      <v-col cols="12">
-        <v-text-field
-          v-model="form.location"
-          label="Lieu"
-          placeholder="Lieu ou s'est déroulée la partie"
-          variant="outlined"
-          density="comfortable"
-          color="secondaryContainer"
-        />
-      </v-col>
+  <v-text-field v-model="form.location" label="Lieu" placeholder="Lieu ou s'est déroulée la partie" variant="outlined"
+    density="comfortable" color="secondaryContainer" />
 
-      <v-col cols="12">
-        <v-text-field
-          v-model="form.duration"
-          label="Durée (minutes)"
-          placeholder="Durée de la partie en minutes"
-          variant="outlined"
-          density="comfortable"
-          type="number"
-          color="secondaryContainer"
-        />
-      </v-col>
+  <v-text-field v-model="form.duration" label="Durée (minutes)" placeholder="Durée de la partie en minutes"
+    variant="outlined" density="comfortable" type="number" color="secondaryContainer" />
 
-      <v-col cols="12">
-        <v-autocomplete
-          v-model="form.players"
-          :items="formattedPlayers"
-          label="Participant·e·s"
-          chips
-          multiple
-          placeholder="Ajouter des participant·e·s"
-          variant="outlined"
-          item-title="title"
-          item-value="value"
-        >
-          <template v-slot:chip="{ props, item }">
-            <v-chip
-                  v-bind="props"
-              class="bg-secondaryContainer"
-                >
-              {{ item.raw.title }}
-                  </v-chip>
-          </template>
-        </v-autocomplete>
-      </v-col>
+  <v-autocomplete v-model="form.players" :items="formattedPlayers" label="Participant·e·s" chips multiple
+    placeholder="Ajouter des participant·e·s" variant="outlined" item-title="title" item-value="value">
+    <template v-slot:chip="{ props, item }">
+      <v-chip v-bind="props" class="bg-secondaryContainer">
+        {{ item.raw.title }}
+      </v-chip>
+    </template>
+  </v-autocomplete>
 
-      <v-col cols="12">
-        <v-autocomplete
-          v-model="form.winners"
-          :items="winnablePlayers"
-          label="Gagnant·e·s"
-          chips
-          multiple
-          placeholder="Sélectionner les gagnant·e·s"
-          variant="outlined"
-          item-title="title"
-          item-value="value"
-        >
-          <template v-slot:chip="{ props, item }">
-                  <v-chip
-              v-bind="props"
-              class="bg-secondaryContainer"
-                  >
-              {{ item.title }}
-                  </v-chip>
-          </template>
-        </v-autocomplete>
-      </v-col>
-    </v-row>
-  </v-container>
+  <v-autocomplete v-model="form.winners" :items="winnablePlayers" label="Gagnant·e·s" chips multiple
+    placeholder="Sélectionner les gagnant·e·s" variant="outlined" item-title="title" item-value="value">
+    <template v-slot:chip="{ props, item }">
+      <v-chip v-bind="props" class="bg-secondaryContainer">
+        {{ item.title }}
+      </v-chip>
+    </template>
+  </v-autocomplete>
 </template>
 
 <script setup>
@@ -146,16 +76,16 @@ const form = ref({
   winners: [],
 });
 
-const winnablePlayers = computed( () => {
+const winnablePlayers = computed(() => {
   return [...formattedPlayers.value]?.filter(p => form.value.players?.includes(p.value))
-}) 
+})
 
 const isValid = computed(() => {
   return form.value.selectedGame &&
-         form.value.date &&
-         form.value.location &&
-         form.value.duration &&
-         form.value.players?.length > 0;
+    form.value.date &&
+    form.value.location &&
+    form.value.duration &&
+    form.value.players?.length > 0;
 });
 
 watch(

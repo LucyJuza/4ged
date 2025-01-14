@@ -1,28 +1,9 @@
 <template>
-  <v-container>
-    <v-row>
-      <v-col cols="12">
-        <v-text-field
-          v-model="form.name"
-          label="Nom"
-          placeholder="Nom de la personne"
-          variant="outlined"
-          density="comfortable"
-          color="secondaryContainer"
-        />
-      </v-col>
+  <v-text-field v-model="form.name" label="Nom" placeholder="Nom de la personne" variant="outlined"
+    density="comfortable" color="secondaryContainer" />
 
-      <v-col cols="12">
-        <v-text-field
-          v-model="form.image"
-          label="Image"
-          placeholder="Lien vers l'image pour la personne"
-          variant="outlined"
-          density="comfortable"
-        />
-      </v-col>
-    </v-row>
-  </v-container>
+  <v-text-field v-model="form.image" label="Image" placeholder="Lien vers l'image pour la personne" variant="outlined"
+    density="comfortable" />
 </template>
 
 <script setup>

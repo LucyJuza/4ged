@@ -1,37 +1,30 @@
 <template>
-  <v-form @submit.prevent="submitForm" class="pa-0 w-100 h-100">
-    <div>
-      <slot
-      :form-data="formData"
-      @update:form-data="updateFormData"
-      ></slot>
-    </div>
+  <v-container class="fill-height align-center">
+    <v-row align="center" justify="center">
+      <v-col cols="12" sm="8" md="6" lg="4">
+        <v-form @submit.prevent="submitForm" class="pa-0">
+          <div>
+            <slot :form-data="formData" @update:form-data="updateFormData"></slot>
+          </div>
 
-    <div class="d-flex flex-row w-100 ga-2">
-      <div class="flex-grow-1">
-        <v-btn
-          class="w-100 pa-0"
-          color="inversePrimary"
-          variant="flat"
-          @click="$emit('cancel')"
-        >
-          <v-icon icon="mdi-close"></v-icon>
-          Annuler
-        </v-btn>
-      </div>
-      <div class="flex-grow-1">
-        <v-btn 
-          class="w-100 pa-0"
-          color="primary" 
-          type="submit" 
-          variant="flat"
-        >
-          <v-icon icon="mdi-plus"></v-icon>
-          Ajouter
-        </v-btn>
-      </div>
-    </div>
-  </v-form>
+          <div class="d-flex flex-row w-100 ga-2">
+            <div class="flex-grow-1">
+              <v-btn class="w-100 pa-0" color="inversePrimary" variant="flat" @click="$emit('cancel')">
+                <v-icon icon="mdi-close"></v-icon>
+                Annuler
+              </v-btn>
+            </div>
+            <div class="flex-grow-1">
+              <v-btn class="w-100 pa-0" color="primary" type="submit" variant="flat">
+                <v-icon icon="mdi-plus"></v-icon>
+                Ajouter
+              </v-btn>
+            </div>
+          </div>
+        </v-form>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script setup>
@@ -51,7 +44,6 @@ const submitForm = () => {
 </script>
 
 <style>
-
 .v-label.v-field-label--floating {
   background-color: rgb(var(--v-theme-secondaryContainer)) !important;
   border-radius: 4px !important;
