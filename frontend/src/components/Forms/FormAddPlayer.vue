@@ -1,12 +1,14 @@
 <template>
   <v-text-field required v-model="form.name" label="Nom" placeholder="Nom de la personne" variant="outlined"
     density="comfortable" color="secondaryContainer" />
-  <v-file-input v-model="form.previewImage" accept="image/*" label="Image" prepend-icon="mdi-camera" show-size
+  <v-file-input v-model="selectedFile" accept="image/*" label="Image" prepend-icon="mdi-camera" show-size
     variant="outlined" required @update:model-value="handleImageChange" />
 </template>
 
 <script setup>
 import { ref, watch } from "vue";
+
+const selectedFile = ref(null);
 
 const props = defineProps({
   modelValue: {
@@ -32,7 +34,7 @@ const handleImageChange = async (file) => {
       }
       form.value.previewImage = URL.createObjectURL(file);
     } catch (error) {
-      showError('Erreur lors du traitement de l\'image');
+      console.error('Erreur lors du traitement de l\'image');
     }
   } else {
     if (form.value.previewImage) {
