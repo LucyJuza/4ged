@@ -152,6 +152,10 @@ export const useDummyStore = defineStore('app', {
         ]
       }
       this.filteredUserGames = []
+    },
+    pushNextGamesPage() {
+      // this does not do anything in dummy datas as there is no pagination
     }
+
   }
 })

@@ -1,6 +1,8 @@
 <template>
   <div class="h-100 pa-0 d-flex flex-column ga-4">
-    <TwoCards firstCardTitle="Mes Jeux" secondCardTitle="Tous les jeux">
+    <TwoCards firstCardTitle="Mes Jeux" secondCardTitle="Tous les jeux" 
+    @scroll-first-card=""
+    @scroll-second-card="scrollBhvrGames">
       <template #firstCardContent>
         <GameList :list="reactiveStore.filteredUserGames.value">
 
@@ -45,5 +47,15 @@ const appStore = useAppStore()
 const reactiveStore = storeToRefs(appStore)
 const filter = ref('')
 appStore.filterGames(filter.value)
-//
+let lastPullGamesDate = new Date()
+const scrollBhvrGames = (e) =>{
+  setTimeout(() => {
+      if ( (new Date()) - lastPullGamesDate > 500
+      && (Math.abs(e.target.scrollHeight - e.target.clientHeight - e.target.scrollTop) < 1)) {
+      lastPullGamesDate = new Date()
+      console.log("pulling next Games page")
+      appStore.pushNextGamesPage()
+    }
+  },100)
+}
 </script>

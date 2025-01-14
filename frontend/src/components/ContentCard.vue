@@ -3,7 +3,7 @@
     <v-card-title v-if="title" primary-title class="text-center">
       {{ title }}
     </v-card-title>
-    <div class="d-flex flex-column align-stretch justify-center pa-2 flex-grow-1 overflow-y-scroll">
+    <div class="d-flex flex-column align-stretch justify-center pa-2 flex-grow-1 overflow-y-scroll" @scroll="(e) => emit('scrollContent', e)">
       <div class="h-100 w-100">
         <slot>
         </slot>
@@ -21,5 +21,9 @@ defineProps({
     type: String,
     default: 'rounded-lg'
   }
+})
+const emit = defineEmits({
+  // only emit if reached "end of scroll"
+  scrollContent(e){ return true }
 })
 </script>
