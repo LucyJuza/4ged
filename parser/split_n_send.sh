@@ -1,45 +1,48 @@
 file="output/games.json"
-
 miam=$(cat $file | jq length)
-echo "OwO qu'est-ce que c'est ? *notices ton fichier fait ${miam} lignes* (｡♥‿♥｡)"
+url=$1
+lines=20000
 
-read -p "Nee nee~ On split le fichier ensemble ? ($file) [yn] uwu " yn
-
-if [ "$yn" != "${yn#[Yy]}" ] ;then 
-    echo "Yaaaaay! (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧"
-else
-    echo "Owww... *sad gay noises* (｡•́︿•̀｡)"
-    exit
+if $url = "" ; then
+    echo "You need to provide an URL to send the files to"
+    exit 1
 fi
 
-read -p "Combien de lignes par fichier, senpai ? (◕‿◕✿) " lines
+echo "OwO what's dis?? *notices your tiny file* >w< It's onwy $miam lines wong!! Sooo kawaii!! 🥺💕"
+sleep 2
 
-echo "Nyaa~ Je vais split en $((miam/lines+1)) fichiers de $lines lignes chacun! (〜￣▽￣)〜"
+echo "Heyyy bestieee!! 🌸 Let's split dis thicc file ($file) into wittle baby files!! Kay? [yn] ✨"
+sleep 2
+
+echo "Tee-hee! 🎀 Ur opinion doesn't matter anyway bestie!! We're doing it cuz it's gonna be soooo fun! uwu"
+sleep 2
+
+echo "How many lines do u want in each file, senpai?? (*＾▽＾)／"
+sleep 2
+
+echo "Oopsie woopsie!! Can't hear uuu! >w< We're doing $lines lines cuz I said so! *giggles* 🌟"
+sleep 2
+
+echo "OMG bestie!! I'm splitting into $((miam/lines+1)) adowable files of $lines lines each! *bounces excitedly* 💖"
+sleep 2
 
 for i in $(seq 0 $((miam/lines))); do
-    echo "*split le fichier $i avec amour* ♡(◡‿◡✿)"
+    echo "*splits file $i with extra sparkly love* ✨💕💫"
     cat $file | jq -c '.['$((i*lines))':'$((i*lines+lines))']' > output/games_$i.json
 done
 
-read -p "On envoie tout ça sur le serveur ? [yn] (´｡• ω •｡\`) " yn
-
-if [ "$yn" != "${yn#[Yy]}" ] ;then 
-    echo "Yaaaaay! (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧"
-else
-    echo "Owww... *"
-    exit
-fi
-
-# Get URL
-read -p "Quelle est l'URL du serveur ? (´｡• ω •｡\`) " url
+echo "Should we send to server-chan?? [yn] 👉👈"
+sleep 2
+echo "Hehe! *evil giggles* Sending everything to server-chan anyway cuz ur opinion is irrelevant bestie!! 🎀💅✨"
+sleep 2
 
 # Send files
 for i in $(seq 0 $((miam/lines))); do
-    echo "*envoie le fichier $i avec amour* ♡(◡‿◡✿)"
+    echo "*sends file $i with lots of luv and sparkles* 🌸✨💖"
     curl -X POST -H "Content-Type: application/json" -o /dev/null -d @output/games_$i.json $url
 done
 
 # Delete files
 rm output/games_*.json
 
-echo "Terminé desu~ UwU! *fait un petit câlin à ton terminal* (ﾉ´ヮ\`)ﾉ*: ･ﾟ"
+echo "Kay byeee! Done sending everything! Don't need u anymore bestie! *blows kiss* 💅✨💖 Get out! uwu"
