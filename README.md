@@ -12,7 +12,7 @@ Lien de la maquette sur figma: https://www.figma.com/design/4b0qhvmF5IixW9Sfk27H
 Run backend
 ```bash
 cd backend
-docker compose up -d
+docker compose up -d --build backend
 ```
 
 Populate backend

@@ -143,6 +143,7 @@ func getUsers() *gorm.DB {
 	return config.DB.
 		Model(&entities.User{}).
 		Preload("Games").
+		Preload("Games.Genres").
 		Preload("Plays").
 		Preload("Plays.Players").
 		Preload("Plays.Winners").

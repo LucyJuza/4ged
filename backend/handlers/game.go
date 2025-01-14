@@ -30,7 +30,7 @@ func GetGames(c *fiber.Ctx) error {
 		}
 		return c.Status(200).JSON(games[0])
 	} else {
-		err := paginate(config.DB, pageIndex).Find(&games).Error
+		err := paginate(config.DB, pageIndex).Preload("Genres").Find(&games).Error
 		if err != nil {
 			return c.Status(500).SendString(err.Error())
 		}
