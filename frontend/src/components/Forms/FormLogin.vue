@@ -167,12 +167,12 @@ const onSubmit = async () => {
 };
 
 const login = async () => {
-  appStore.login(username.value, password.value)
+  await appStore.login(username.value, password.value)
   router.push('/')
 };
 
 const register = async () => {
-  appStore.register(username.value, password.value, imageBase64.value)
+  await appStore.register(username.value, password.value, imageBase64.value)
   router.push('/')
 };
 
@@ -204,7 +204,11 @@ const showSuccess = (message) => {
 
 const showError = (message) => {
   snackbarColor.value = 'error';
-  snackbarText.value = message;
+  if (isLogin.value){
+    snackbarText.value = "Nom d'utilisateur ou mot de passe incorect";
+  }else{
+    snackbarText.value = message;
+  }
   snackbar.value = true;
 };
 </script>

@@ -5,7 +5,7 @@ import dummyUserDatas from '../../dummy-user-datas.json'
 import dummyGenres from '../../dummy-genres.json'
 import dummyGames from '../../dummy-games.json'
 import { login, register } from '@/utils/dummy-auth';
-export const useDummyStore = defineStore('app', {
+export const useDummyStore = defineStore('dummy', {
   state: () => ({
     userData: undefined,
     genres: dummyGenres,

@@ -47,6 +47,7 @@ const appStore = useAppStore()
 const reactiveStore = storeToRefs(appStore)
 const filter = ref('')
 appStore.filterGames(filter.value)
+appStore.refreshDatas()
 let lastPullGamesDate = new Date()
 const scrollBhvrGames = (e) =>{
   setTimeout(() => {
@@ -54,7 +55,7 @@ const scrollBhvrGames = (e) =>{
       && (Math.abs(e.target.scrollHeight - e.target.clientHeight - e.target.scrollTop) < 1)) {
       lastPullGamesDate = new Date()
       console.log("pulling next Games page")
-      appStore.pushNextGamesPage()
+      appStore.pushNextFilteredGamesPage()
     }
   },100)
 }

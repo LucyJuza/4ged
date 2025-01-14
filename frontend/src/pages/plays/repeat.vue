@@ -5,7 +5,7 @@
       @submit="() => {
       appStore.addPlay({
         gameId: appStore.getPlayById(formValues.selectedPlay).gameId,
-        date: (new Date(formValues.date)).toUTCString(),
+        date: (new Date(formValues.date)).toISOString(),
         duration: formValues.duration,
         location: formValues.location,
         participants: formValues.players,
@@ -38,7 +38,7 @@ const formValues = {
   selectedPlay: appStore.selectedPlayIdForRepetition ?? undefined,
   date: "",
   location: "",
-  duration: "",
+  duration: 0,
   players: [],
   winners: [],
 }

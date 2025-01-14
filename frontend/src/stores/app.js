@@ -1,2 +1,3 @@
+import { useBackendStore } from './backend'
 import { useDummyStore } from './dummy'
-export const useAppStore = useDummyStore
+export const useAppStore = useBackendStore

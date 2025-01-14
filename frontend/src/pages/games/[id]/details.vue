@@ -1,13 +1,13 @@
 <template>
   <FullContentCard>
-    <v-container fluid class="pa-0 w-100 h-100 d-flex flex-column flex-nowrap align-center">
+    <v-container v-if="game" fluid class="pa-0 w-100 h-100 d-flex flex-column flex-nowrap align-center">
       <span class="text-h6 text-center">Informations</span>
       <div>
         <div>
           <span class="font-weight-bold">Nom:</span> <span>{{ game.name }}</span>
         </div>
         <div>
-          <span class="font-weight-bold">Genres:</span> <span>{{ game.genres.reduce( (acc,curr) => acc += ", " + curr.name,"" ).substring(2) }}</span>
+          <span class="font-weight-bold">Genres:</span> <span>{{ game.genres?.reduce( (acc,curr) => acc += ", " + curr.name,"" ).substring(2) }}</span>
         </div>
         <v-img
         class="mt-2"
@@ -40,6 +40,7 @@
     </v-container>
   </FullContentCard>
 </template>
+
 <route lang="yaml">
 meta:
   title: "Détails"
@@ -47,12 +48,16 @@ meta:
 <script setup>
 import FullContentCard from '@/components/FullContentCard.vue';
 import PlaysList from '@/components/PlaysList.vue';
+import { useFuture } from '@/composables/future';
 import { useAppStore } from '@/stores/app';
 import { useRoute, useRouter } from 'vue-router';
 const appStore = useAppStore()
 const route = useRoute();
 const router = useRouter()
 const id = route.params.id;
-const game = appStore.getGameById(id)
+const {data,err} = useFuture(appStore.getGameById(id))
+const game = data
+console.log("coucou")
+console.log(game.value)
 const history = appStore.getGameHistory(id)
 </script>

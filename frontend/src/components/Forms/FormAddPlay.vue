@@ -1,11 +1,7 @@
 <template>
+  
   <v-autocomplete required v-model="form.selectedGame" :items="formatedGames" label="Jeu joué"
     placeholder="Sélectionner le jeu joué" variant="outlined" item-title="title" item-value="value">
-    <template v-slot="{ props, item }">
-      <v-chip v-bind="props" class="bg-secondaryContainer">
-        {{ item.title }}
-      </v-chip>
-    </template>
   </v-autocomplete>
 
   <v-text-field required type="date" v-model="form.date" label="Date de la partie" placeholder="dd/mm/yyyy" variant="outlined"
@@ -37,6 +33,7 @@
 </template>
 
 <script setup>
+import { useFuture } from "@/composables/future";
 import { useAppStore } from "@/stores/app";
 import { storeToRefs } from "pinia";
 import { ref, computed, watch } from "vue";
@@ -52,7 +49,7 @@ const props = defineProps({
 const emit = defineEmits(["update:modelValue"]);
 
 const availablePlayers = reactiveAppStore.userData.value.persons
-const availableGames = reactiveAppStore.games.value
+const availableGames = reactiveAppStore.userData.value.games
 
 const formattedPlayers = computed(() => {
   return availablePlayers.map(player => ({
@@ -88,6 +85,16 @@ const isValid = computed(() => {
     form.value.players?.length > 0;
 });
 
+const {data,err} = useFuture(new Promise((resolve,reject) => {
+  if(appStore.selectedGameIdForPlayCreation){
+   appStore.getGameById(appStore.selectedGameIdForPlayCreation).then(
+    game => resolve(game)
+   )
+  }else {
+    resolve(undefined)
+  }
+}));
+
 watch(
   form,
   (newValue) => {
@@ -105,4 +112,14 @@ watch(
   },
   { immediate: true }
 );
+
+watch(data,() =>{
+  console.log(data.value)
+  if(data.value){
+    if(! (availableGames.find(g => g.id === data.value.id))){
+      availableGames.push(data.value)
+    }
+    form.value.selectedGame = data.value.id
+  }
+})
 </script>

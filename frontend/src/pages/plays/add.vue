@@ -5,8 +5,8 @@
       @submit="() => {
       appStore.addPlay({
         gameId: formValues.selectedGame,
-        date: formValues.date,
-        duration: formValues.duration,
+        date: (new Date(formValues.date)).toISOString(),
+        duration: Number(formValues.duration),
         location: formValues.location,
         participants: formValues.players,
         winners: formValues.winners
@@ -15,7 +15,7 @@
       router.back()}"
       @cancel="() => {router.back()}"
       >
-        <FormAddPlay
+        <FormAddPlay :key="formValues.selectedGame"
         v-model="formValues">
         </FormAddPlay>
       </Form>
@@ -30,15 +30,17 @@ meta:
 import Form from '@/components/Forms/Form.vue';
 import FormAddPlay from '@/components/Forms/FormAddPlay.vue';
 import FullContentCard from '@/components/FullContentCard.vue';
+import { useFuture } from '@/composables/future';
 import { useAppStore } from '@/stores/app';
+import { computed, reactive, watch } from 'vue';
 import { useRouter } from 'vue-router';
 const appStore = useAppStore()
 const router = useRouter()
 const formValues = {
-  selectedGame: appStore.selectedGameIdForPlayCreation ?? undefined,
+  selectedGame: undefined,
   date: "",
   location: "",
-  duration: "",
+  duration: undefined,
   players: [],
   winners: [],
 }
