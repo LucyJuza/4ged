@@ -1,7 +1,7 @@
 <template>
   <v-text-field required v-model="form.name" label="Nom" placeholder="Nom de la personne" variant="outlined"
     density="comfortable" color="secondaryContainer" />
-  <v-file-input v-model="form.image" accept="image/*" label="Image" prepend-icon="mdi-camera" show-size
+  <v-file-input v-model="form.previewImage" accept="image/*" label="Image" prepend-icon="mdi-camera" show-size
     variant="outlined" required @update:model-value="handleImageChange" />
 </template>
 
@@ -20,28 +20,26 @@ const emit = defineEmits(["update:modelValue"]);
 const form = ref({
   name: "",
   image: null,
+  previewImage: null,
 });
-
-const previewImage = ref(null);
-const imageBase64 = ref(null);
 
 const handleImageChange = async (file) => {
   if (file) {
     try {
-      imageBase64.value = await convertToBase64(file);
-      if (previewImage.value) {
-        URL.revokeObjectURL(previewImage.value);
+      form.value.image = await convertToBase64(file);
+      if (form.value.previewImage) {
+        URL.revokeObjectURL(previewImage);
       }
-      previewImage.value = URL.createObjectURL(file);
+      form.value.previewImage = URL.createObjectURL(file);
     } catch (error) {
       showError('Erreur lors du traitement de l\'image');
     }
   } else {
-    if (previewImage.value) {
-      URL.revokeObjectURL(previewImage.value);
+    if (form.value.previewImage) {
+      URL.revokeObjectURL(form.value.previewImage);
     }
-    previewImage.value = null;
-    imageBase64.value = null;
+    form.value.previewImage = null;
+    form.value.image = null;
   }
 };
 

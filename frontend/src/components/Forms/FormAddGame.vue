@@ -1,7 +1,7 @@
 <template>
   <v-text-field v-model="form.name" label="Nom" placeholder="Mon super jeu custom" variant="outlined"
     density="comfortable" required :rules="nameRules" />
-  <v-file-input v-model="form.image" accept="image/*" label="Image" prepend-icon="mdi-camera" show-size
+  <v-file-input v-model="form.previewImage" accept="image/*" label="Image" prepend-icon="mdi-camera" show-size
     variant="outlined" required :rules="imageRules" @update:model-value="handleImageChange" />
   <v-autocomplete v-model="form.genres" :items="items" label="Genres" chips multiple placeholder="Ajouter des genres"
     variant="outlined" required :rules="genreRules">
@@ -20,8 +20,6 @@ const nameRules = [v => !!v || 'Le nom est requis']
 const imageRules = [v => !!v || 'L\'image est requise']
 const genreRules = [v => v?.length > 0 || 'Au moins un genre est requis']
 const appStore = useAppStore()
-const previewImage = ref(null);
-const imageBase64 = ref(null);
 const items = appStore.genres.map(g => g.name)
 const props = defineProps({
   modelValue: {
@@ -35,26 +33,27 @@ const emit = defineEmits(['update:modelValue'])
 const form = ref({
   name: '',
   image: null,
+  previewImage: null,
   genres: []
 })
 
 const handleImageChange = async (file) => {
   if (file) {
     try {
-      imageBase64.value = await convertToBase64(file);
-      if (previewImage.value) {
-        URL.revokeObjectURL(previewImage.value);
+      form.value.image = await convertToBase64(file);
+      if (form.value.previewImage) {
+        URL.revokeObjectURL(previewImage);
       }
-      previewImage.value = URL.createObjectURL(file);
+      form.value.previewImage = URL.createObjectURL(file);
     } catch (error) {
       showError('Erreur lors du traitement de l\'image');
     }
   } else {
-    if (previewImage.value) {
-      URL.revokeObjectURL(previewImage.value);
+    if (form.value.previewImage) {
+      URL.revokeObjectURL(form.value.previewImage);
     }
-    previewImage.value = null;
-    imageBase64.value = null;
+    form.value.previewImage = null;
+    form.value.image = null;
   }
 };
 
