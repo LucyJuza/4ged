@@ -15,6 +15,7 @@
 </template>
 
 <script setup>
+import Header from '@/components/Header.vue';
 import BottomNavigationElements from '@/components/BottomNavigationElements.vue';
 import { useAuthentication } from '@/composables/authentication';
 import { computed } from 'vue';

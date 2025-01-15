@@ -10,12 +10,12 @@
     class="bg-surfaceVariant rounded"
     temporary
   >
-    <NavigationDrawerElementsCopy/>
+    <NavigationDrawerElements/>
   </v-navigation-drawer>
 </template>
 <script setup>
 import { useDisplay } from 'vuetify';
-import NavigationDrawerElementsCopy from './NavigationDrawerElements.vue';
+import NavigationDrawerElements from './NavigationDrawerElements.vue';
 
 const { mdAndUp } = useDisplay()
 defineProps({

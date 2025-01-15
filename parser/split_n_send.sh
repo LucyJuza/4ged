@@ -1,35 +1,34 @@
+#!/bin/bash
+
+echo "✧･ﾟ: *✧･ﾟ:* 🌸 Hewwo World! 🌸 *:･ﾟ✧*:･ﾟ✧"
+echo "I'm Cherry-Chan, your kawaii file-splitting assistant desu~! (◕‿◕✿)"
+echo "Today we're gonna make your big files smol and kawaii together! *wiggles excitedly* 💕"
+
 file="output/games.json"
 miam=$(cat $file | jq length)
 url=$1
 lines=20000
 
-if $url; then
-    echo "UwU!! I need a server-chan to send the files to!! >w<"
-    exit 1
-fi
-
-echo "OwO what's dis?? *notices your tiny file* >w< It's onwy $miam lines wong!! Sooo kawaii!! 🥺💕"
-echo "Heyyy bestieee!! 🌸 Let's split dis thicc file ($file) into wittle baby files!! Kay? [yn] ✨"
-echo "Tee-hee! 🎀 Ur opinion doesn't matter anyway bestie!! We're doing it cuz it's gonna be soooo fun! uwu"
-echo "How many lines do u want in each file, senpai?? (*＾▽＾)／"
-echo "Oopsie woopsie!! Can't hear uuu! >w< We're doing $lines lines cuz I said so! *giggles* 🌟"
-echo "OMG bestie!! I'm splitting into $((miam/lines+1)) adowable files of $lines lines each! *bounces excitedly* 💖"
+echo "OwO what's dis?? *notices your file* The input file has $miam entries! Sugoi~! 💫"
+echo "Bestieee!! Time to split $file into bite-sized chunks! Ready or not~ 🎀"
+echo "*pulls out magical coding wand* We're setting each file to $lines lines! ✨"
+echo "Quick maths time! *boops calculator* We'll make $((miam/lines+1)) kawaii baby files! 💕"
 
 for i in $(seq 0 $((miam/lines))); do
-    echo "*splits file $i with extra sparkly love* ✨💕💫"
+    echo "*sprinkles magic coding dust on file $i* ✨"
     cat $file | jq -c '.['$((i*lines))':'$((i*lines+lines))']' > output/games_$i.json
 done
 
-echo "Should we send to server-chan?? [yn] 👉👈"
-echo "Hehe! *evil giggles* Sending everything to server-chan anyway cuz ur opinion is irrelevant bestie!! 🎀💅✨"
+echo "Yaaay~! Files split successfully! Time to send them to server-sama! (｡♥‿♥｡)"
 
 # Send files
 for i in $(seq 0 $((miam/lines))); do
-    echo "*sends file $i with lots of luv and sparkles* 🌸✨💖"
+    echo "Sending file $i with extra sparkles~! *nyaa* ⭐"
     curl -X POST -H "Content-Type: application/json" -o /dev/null -d @output/games_$i.json $url
 done
 
 # Delete files
 rm output/games_*.json
 
-echo "Kay byeee! Done sending everything! Don't need u anymore bestie! *blows kiss* 💅✨💖 Get out! uwu"
+echo "Mission accomplished! Your files have been sent with lots of luv! (◠‿◠✿)"
+echo "Arigato for using Cherry-Chan's file splitter! Ja ne~! 🌸✨💖"

@@ -1,4 +1,4 @@
-const BACKEND_URL_PREFIX = "http://localhost"
+const BACKEND_URL_PREFIX = "https://4ged.chacal.beer"
 const POSTheaders = new Headers()
 POSTheaders.append("content-type", "application/json")
 const getGenres = async () => {
