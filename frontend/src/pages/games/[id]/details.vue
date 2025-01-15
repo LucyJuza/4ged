@@ -22,7 +22,7 @@
       </div>
       <span class="text-h6 mt-3">Historique</span>
       <div class="w-100 overflow-auto flex-shrink-0" max-height="300">
-        <PlaysList style="max-width: 500px;" :list="history">
+        <PlaysList :key="appStore.getGameHistory(id).length" style="max-width: 500px;" :list="appStore.getGameHistory(id)">
         </PlaysList>
       </div>
       <v-btn
@@ -59,5 +59,4 @@ const {data,err} = useFuture(appStore.getGameById(id))
 const game = data
 console.log("coucou")
 console.log(game.value)
-const history = appStore.getGameHistory(id)
 </script>
