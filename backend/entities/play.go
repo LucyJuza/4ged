@@ -16,6 +16,8 @@ type Play struct {
 }
 
 type PlayJson struct {
+	ID       uint      `json:"id"`     // not needed in post
+	UserID   uint      `json:"userId"` // not needed in post
 	GameId   uint      `json:"gameId"`
 	Date     time.Time `json:"date"`
 	Location string    `json:"location"`

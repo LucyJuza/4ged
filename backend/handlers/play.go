@@ -97,6 +97,8 @@ func playJsonFromPlay(play entities.Play) entities.PlayJson {
 	}
 
 	return entities.PlayJson{
+		ID:       play.ID,
+		UserID:   play.UserID,
 		GameId:   play.GameId,
 		Date:     play.Date,
 		Location: play.Location,
