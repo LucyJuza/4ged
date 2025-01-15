@@ -1,6 +1,8 @@
 package entities
 
-import "time"
+import (
+	"time"
+)
 
 type Play struct {
 	ID       uint      `gorm:"primaryKey" json:"id"` // not needed in post
@@ -11,4 +13,13 @@ type Play struct {
 	Duration uint      `json:"duration"`
 	Players  []Player  `gorm:"many2many:play_participants;"  json:"participants"`
 	Winners  []Player  `gorm:"many2many:play_winners;"  json:"winners"`
+}
+
+type PlayJson struct {
+	GameId   uint      `json:"gameId"`
+	Date     time.Time `json:"date"`
+	Location string    `json:"location"`
+	Duration uint      `json:"duration"`
+	Players  []uint    `json:"participants"`
+	Winners  []uint    `json:"winners"`
 }

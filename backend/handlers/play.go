@@ -16,12 +16,12 @@ func AddUserPlay(c *fiber.Ctx) error {
 	if err != nil {
 		return c.Status(fiber.ErrBadRequest.Code).SendString(err.Error())
 	}
+	playJson := entities.PlayJson{}
 
-	play := entities.Play{}
-
-	if err = c.BodyParser(&play); err != nil {
+	if err = c.BodyParser(&playJson); err != nil {
 		return c.Status(fiber.ErrBadRequest.Code).SendString("Bad play format")
 	}
+	play := playFromPlayJson(playJson)
 
 	game := entities.Game{}
 	config.DB.Find(&game, play.GameId)
@@ -66,4 +66,42 @@ func RemoveUserPlay(c *fiber.Ctx) error {
 		return c.Status(fiber.ErrInternalServerError.Code).SendString("An error occured while deleting the person")
 	}
 	return c.JSON(play)
+}
+
+func playFromPlayJson(play entities.PlayJson) entities.Play {
+	players := make([]entities.Player, 0)
+	winners := make([]entities.Player, 0)
+
+	config.DB.Find(&players, play.Players)
+	config.DB.Find(&winners, play.Winners)
+
+	return entities.Play{
+		GameId:   play.GameId,
+		Date:     play.Date,
+		Location: play.Location,
+		Duration: play.Duration,
+		Players:  players,
+		Winners:  winners,
+	}
+}
+
+func playJsonFromPlay(play entities.Play) entities.PlayJson {
+	players := make([]uint, 0)
+	winners := make([]uint, 0)
+
+	for _, player := range play.Players {
+		players = append(players, player.ID)
+	}
+	for _, winner := range play.Winners {
+		winners = append(winners, winner.ID)
+	}
+
+	return entities.PlayJson{
+		GameId:   play.GameId,
+		Date:     play.Date,
+		Location: play.Location,
+		Duration: play.Duration,
+		Players:  players,
+		Winners:  winners,
+	}
 }
