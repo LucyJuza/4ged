@@ -1,4 +1,4 @@
-<template >
+<template>
   <div :key="id" class="h-100 w-100">
     <Pie
     id="piechart-winrate"
