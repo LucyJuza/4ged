@@ -6,7 +6,7 @@
       appStore.addPlay({
         gameId: appStore.getPlayById(formValues.selectedPlay).gameId,
         date: (new Date(formValues.date)).toISOString(),
-        duration: formValues.duration,
+        duration: Number(formValues.duration),
         location: formValues.location,
         participants: formValues.players,
         winners: formValues.winners
@@ -35,7 +35,7 @@ import { useRouter } from 'vue-router';
 const appStore = useAppStore()
 const router = useRouter()
 let formValues = {
-  selectedPlay: appStore.selectedPlayIdForRepetition ?? undefined,
+  selectedPlay: undefined,
   date: "",
   location: "",
   duration: 0,

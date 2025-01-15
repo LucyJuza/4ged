@@ -3,7 +3,8 @@
     <div class="d-flex flex-column">
       <PlaysList :images-enabled="true"
       style="max-width: 500px;"
-      :list="appStore.userData.plays"
+      :list="userData.plays"
+      :key="userData.plays.length"
       />
     </div>
   </FullContentCard>
@@ -29,10 +30,13 @@ meta:
 import FullContentCard from '@/components/FullContentCard.vue';
 import PlaysList from '@/components/PlaysList.vue';
 import { useAppStore } from '@/stores/app';
+import { storeToRefs } from 'pinia';
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useDisplay } from 'vuetify';
+const router = useRouter()
 const { smAndDown } = useDisplay()
 const appStore = useAppStore()
-const router = useRouter()
+const {userData} = storeToRefs(appStore)
 //
 </script>

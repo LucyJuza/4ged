@@ -62,12 +62,13 @@ const formattedPlayers = computed(() => {
 });
 
 const formatedPlays = computed(() => {
-  return availablePlays?.map(play => ({
+  return availablePlays.map(play => ({
     title: `Partie du ${(new Date(play.date)).toLocaleDateString()}`,
     value: play.id
   }));
 });
-const form = ref({
+
+let form = ref({
   selectedPlay: "",
   date: "",
   location: "",
@@ -101,8 +102,10 @@ watch(
   (newValue) => {
     if (Object.keys(newValue).length) {
       form.value = { ...newValue };
+      console.log(form.value.selectedPlay)
     }
   },
   { immediate: true }
 );
+form.value.selectedPlay = Number(appStore.selectedPlayIdForRepetition)
 </script>

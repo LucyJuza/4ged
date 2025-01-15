@@ -4,7 +4,7 @@
       <span class="text-h6 text-center">Informations</span>
       <div>
         <div>
-          <span>Jeu: </span> <span>{{ appStore.getGameById(play.gameId).name }}</span>
+          <span>Jeu: </span> <span>{{ relatedGame?.name }}</span>
         </div>
         <div>
           <span>Date de la partie: </span> <span>{{ (new Date(play.date)).toLocaleDateString() }}</span>
@@ -43,11 +43,15 @@ meta:
 </route>
 <script setup>
 import FullContentCard from '@/components/FullContentCard.vue';
+import { useFuture } from '@/composables/future';
 import { useAppStore } from '@/stores/app';
+import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 const appStore = useAppStore()
 const route = useRoute();
 const router = useRouter()
 const id = route.params.id;
 const play = appStore.getPlayById(id)
+let {data,error} = useFuture(appStore.getGameById(play.gameId))
+const relatedGame = ref (data)
 </script>

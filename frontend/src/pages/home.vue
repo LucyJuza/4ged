@@ -25,21 +25,21 @@
           <HalfContentCard title="Dernières parties">
             <div v-if="smAndDown" class="h-100 d-flex align-center">
               <HorizontalScroll>
-                <div style="width:200px; height: 100px;" v-for="play in last4Plays">
+                <div style="width:200px; height: 100px;" v-for="play in last4PlaysStructured">
                   <ImageCard
                   @click="() => router.push(`/plays/${play.id}/details`)"
-                  :src="appStore.games.find(g => g.id === play.gameId).image"
-                  :text="appStore.games.find(g => g.id === play.gameId).name"
+                  :src="play.image"
+                  :text="play.name"
                   :subtext="play.winners.includes(appStore.userData.personId) ? 'Gagnée' : 'Perdue'"/>
                 </div>
               </HorizontalScroll>
             </div>
             <div v-else class="h-100 d-flex flex-row flex-wrap align-center justify-space-around ga-9">
-              <div style="width:280px; height: 200px;" v-for="play in last4Plays">
+              <div style="width:280px; height: 200px;" v-for="play in last4PlaysStructured">
                 <ImageCard 
                   @click="() => router.push(`/plays/${play.id}/details`)"
-                  :src="appStore.games.find(g => g.id === play.gameId).image"
-                  :text="appStore.games.find(g => g.id === play.gameId).name"
+                  :src="play.image"
+                  :text="play.name"
                   :subtext="play.winners.includes(appStore.userData.personId) ? 'Gagnée' : 'Perdue'"/>
               </div>
             </div>
@@ -120,14 +120,31 @@ meta:
 import HalfContentCard from '@/components/HalfContentCard.vue';
 import ImageCard from '@/components/ImageCard.vue';
 import WinratePie from '@/components/WinratePie.vue';
+import { useFutureList } from '@/composables/futureList';
 import { useAppStore } from '@/stores/app';
+import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useDisplay } from 'vuetify';
 const { smAndDown } = useDisplay()
 const router = useRouter()
 const appStore = useAppStore()
-let last4Plays = []
-last4Plays = appStore.userData?.plays.sort((a,b) => (new Date(b.date)) - (new Date(a.date)) ).slice(0,4)
+const {userData} = storeToRefs(appStore)
+let last4Plays = ref([])
+last4Plays.value = userData.value?.plays.sort((a,b) => (new Date(b.date)) - (new Date(a.date)) ).slice(0,4)
+let {data,error} = useFutureList(last4Plays.value.map(async (play) => ({
+  image : (await appStore.getGameById(play.gameId)).image,
+  name : (await appStore.getGameById(play.gameId)).name,
+  id: play.id,
+  gameId: play.gameId,
+  date: play.date,
+  location: play.locaiton,
+  duration: play.duration,
+  participants: play.participants,
+  winners: play.winners
+})))
+let last4PlaysStructured = ref(data)
+console.log(last4PlaysStructured)
+
 const fabGroupOpenned = ref(false)
 </script>

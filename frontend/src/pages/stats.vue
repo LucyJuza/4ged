@@ -4,7 +4,7 @@
       <div>
         <div>
           <span class="font-weight-bold">Temps total de parties: </span>
-          <span>{{ stats.playtime/60 }} heures</span>
+          <span>~{{ Math.round(stats.playtime/60) }} heures</span>
         </div>
         <div>
           <span class="font-weight-bold">Plus de victoires: </span>
