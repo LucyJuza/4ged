@@ -1,0 +1,137 @@
+{
+  "id": "test_player",
+  "personId":  "1",
+  "name": "Raptiste Boland",
+  "image": "https://i.ibb.co/4pxYvZ7/image-1.png",
+  "games": [
+    {
+      "id": "1",
+      "name": "Mystic Realms",
+      "image": "https://cf.geekdo-images.com/sZYp_3BTDGjh2unaZfZmuA__original/img/7d-lj5Gd1e8PFnD97LYFah2c45M=/0x0/filters:format(jpeg)/pic2437871.jpg",
+      "genres": [
+        { "name": "Fantasy" },
+        { "name": "Strategy" },
+        { "name": "Adventure" }
+      ]
+    },
+    {
+      "id": "2",
+      "name": "Empire Builders",
+      "image": "https://cf.geekdo-images.com/SoU8p28Sk1s8MSvoM4N8pQ__original/img/g4S18szTdrXCdIwVKzMKrZrYAcM=/0x0/filters:format(jpeg)/pic6293412.jpg",
+      "genres": [
+        { "name": "Economic" },
+        { "name": "Strategy" },
+        { "name": "Simulation" }
+      ]
+    },
+    {
+      "id": "3",
+      "name": "Dungeon Quest",
+      "image": "https://cf.geekdo-images.com/_Ppn5lssO5OaildSE-FgFA__original/img/kVpZ0Maa_LeQGWxOqsYKP3N4KUY=/0x0/filters:format(jpeg)/pic3727516.jpg",
+      "genres": [
+        { "name": "Dungeon Crawler" },
+        { "name": "Cooperative" },
+        { "name": "Adventure" }
+      ]
+    },
+    {
+      "id": "4",
+      "name": "Galactic Conquest",
+      "image": "https://cf.geekdo-images.com/x3zxjr-Vw5iU4yDPg70Jgw__original/img/FpyxH41Y6_ROoePAilPNEhXnzO8=/0x0/filters:format(jpeg)/pic3490053.jpg",
+      "genres": [
+        { "name": "Sci-Fi" },
+        { "name": "Strategy" },
+        { "name": "Conflict" }
+      ]
+    },
+    {
+      "id": "5",
+      "name": "Detective Chronicles",
+      "image": "https://cf.geekdo-images.com/-Qer2BBPG7qGGDu6KcVDIw__original/img/PlzAH7swN1nsFxOXbfUvE3TkE5w=/0x0/filters:format(png)/pic2452831.png",
+      "genres": [
+        { "name": "Mystery" },
+        { "name": "Deduction" },
+        { "name": "Role-Playing" }
+      ]
+    }
+  ],
+  "plays": [
+    {
+      "id": "1",
+      "gameId": "1",
+      "date": "2025-01-06T19:30:00Z",
+      "location": "Chez Moi",
+      "duration": 120,
+      "participants": ["1", "2", "3"],
+      "winners": ["3"]
+    },
+    {
+      "id": "2",
+      "gameId": "2",
+      "date": "2025-01-05T14:00:00Z",
+      "location": "Chez Marolline",
+      "duration": 90,
+      "participants": ["1", "4", "5"],
+      "winners": ["1"]
+    },
+    {
+      "id": "3",
+      "gameId": "3",
+      "date": "2025-01-04T18:00:00Z",
+      "location": "Chez Jamie",
+      "duration": 150,
+      "participants": ["2", "3", "4", "5"],
+      "winners": ["4", "5"]
+    },
+    {
+      "id": "4",
+      "gameId": "4",
+      "date": "2025-01-03T20:00:00Z",
+      "location": "Chez Taylor",
+      "duration": 180,
+      "participants": ["1", "3", "4"],
+      "winners": ["3"]
+    },
+    {
+      "id": "5",
+      "gameId": "5",
+      "date": "2025-01-02T16:00:00Z",
+      "location": "Chez Jordan",
+      "duration": 75,
+      "participants": ["2", "4", "5"],
+      "winners": ["5"]
+    }
+  ],
+  "persons": [
+  {
+    "id": "1",
+    "name": "Raptiste Boland",
+    "image": "https://i.ibb.co/4pxYvZ7/image-1.png",
+    "winrate": 78.5
+  },
+  {
+    "id": "2",
+    "name": "Marolline Caillard",
+    "image": "https://i.ibb.co/6mnywyS/portrait.png",
+    "winrate": 65.2
+  },
+  {
+    "id": "3",
+    "name": "Morgan Lee",
+    "image": "https://letemps-17455.kxcdn.com/photos/7bad218f-a587-44a0-8aed-c3ee507018e6/small",
+    "winrate": 82.1
+  },
+  {
+    "id": "4",
+    "name": "Taylor Brown",
+    "image": "https://cdn.futura-sciences.com/sources/images/actu/plus-petit-os-corps-humain-etrier-oreille.jpg",
+    "winrate": 74.3
+  },
+  {
+    "id": "5",
+    "name": "Jordan Davis",
+    "image": "https://www.buzzwebzine.fr/wp-content/uploads/2022/08/squelette-humain-1.jpg",
+    "winrate": 69.8
+  }
+]
+}

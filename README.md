@@ -6,3 +6,17 @@ L'idée de l'application est de créer une plateforme web avec une base de donn�
 
 ## Figma
 Lien de la maquette sur figma: https://www.figma.com/design/4b0qhvmF5IixW9Sfk27HJi/Maquettes-IHM2?node-id=0-1&node-type=canvas&t=1x7TVVvYcaHGsbIu-0
+
+## Backend
+
+Run backend
+```bash
+cd backend
+docker compose up -d --build backend
+```
+
+Populate backend
+```bash
+cd parser
+./split_n_send.sh localhost/batch/games
+```

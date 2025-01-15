@@ -1,8 +1,3 @@
-// Utilities
-import { defineStore } from 'pinia'
-
-export const useAppStore = defineStore('app', {
-  state: () => ({
-    //
-  }),
-})
+import { useBackendStore } from './backend'
+import { useDummyStore } from './dummy'
+export const useAppStore = useBackendStore

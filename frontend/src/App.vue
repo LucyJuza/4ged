@@ -1,11 +1,7 @@
 <template>
-  <v-app>
-    <v-main>
-      <v-theme-provider theme="light">
-        <router-view />
-      </v-theme-provider>
-    </v-main>
-  </v-app>
+  <v-theme-provider theme="light">
+    <router-view />
+  </v-theme-provider>
 </template>
 
 <script setup>
