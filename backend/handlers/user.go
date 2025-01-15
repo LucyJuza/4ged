@@ -26,7 +26,32 @@ func GetUsers(c *fiber.Ctx) error {
 		if err != nil {
 			return c.SendStatus(404)
 		}
-		return c.Status(200).JSON(users[0])
+		user := users[0]
+
+		playJsons := make([]entities.PlayJson, 0)
+
+		for _, play := range user.Plays {
+			playJsons = append(playJsons, playJsonFromPlay(play))
+		}
+
+		json := struct {
+			ID       uint                `json:"id"`
+			PlayerId uint                `json:"personId"`
+			Name     string              `json:"name"`
+			ImageUrl string              `json:"image"`
+			Games    []entities.Game     `json:"games"`
+			Plays    []entities.PlayJson `json:"plays"`
+			Players  []entities.Player   `json:"persons"`
+		}{
+			ID:       user.ID,
+			PlayerId: user.PlayerId,
+			Name:     user.Name,
+			ImageUrl: user.ImageUrl,
+			Games:    user.Games,
+			Plays:    playJsons,
+			Players:  user.Players,
+		}
+		return c.Status(200).JSON(json)
 	} else {
 		err := paginate(getUsers().Find(&users), pageIndex).Error
 		if err != nil {
