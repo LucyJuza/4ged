@@ -28,7 +28,7 @@ import { useAppStore } from '@/stores/app';
 import { useRouter } from 'vue-router';
 const appStore = useAppStore()
 const router = useRouter()
-const formValues = { 
+let formValues = { 
   name: undefined,
   image: undefined,
   genres: []

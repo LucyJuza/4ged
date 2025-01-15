@@ -19,7 +19,7 @@ const props = defineProps({
 
 const emit = defineEmits(["update:modelValue"]);
 
-const form = ref({
+let form = ref({
   name: "",
   image: null,
   previewImage: null,

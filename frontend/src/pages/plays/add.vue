@@ -36,7 +36,7 @@ import { computed, reactive, watch } from 'vue';
 import { useRouter } from 'vue-router';
 const appStore = useAppStore()
 const router = useRouter()
-const formValues = {
+let formValues = {
   selectedGame: undefined,
   date: "",
   location: "",
